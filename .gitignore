@@ -33,14 +33,3 @@ tests/proguard-project.txt
 build
 /gradle.properties
 
-src/main/res/* 
-build.gradle 
-src/generic/google-service.json 
-src/gplay/google-service.json 
-src/main/AndroidManifest.xml 
-src/main/java/com/owncloud/android/MainApp.java 
-src/main/java/com/owncloud/android/authentication/AuthenticatorActivity.java 
-src/main/java/com/owncloud/android/datamodel/FileDataStorageManager.java 
-src/main/java/com/owncloud/android/ui/preview/PreviewMediaFragment.java 
-src/main/java/com/owncloud/android/utils/ThemeUtils.java 
-src/main/java/com/owncloud/android/ui/activity/DrawerActivity.java 

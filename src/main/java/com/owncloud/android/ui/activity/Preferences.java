@@ -1,24 +1,23 @@
 /**
- *   ownCloud Android client application
+ * ownCloud Android client application
  *
- *   @author Bartek Przybylski
- *   @author David A. Velasco
- *   Copyright (C) 2011  Bartek Przybylski
- *   Copyright (C) 2016 ownCloud Inc.
- *   Copyright (C) 2016 Nextcloud
- *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License version 2,
- *   as published by the Free Software Foundation.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * @author Bartek Przybylski
+ * @author David A. Velasco
+ * Copyright (C) 2011  Bartek Przybylski
+ * Copyright (C) 2016 ownCloud Inc.
+ * Copyright (C) 2016 Nextcloud
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.owncloud.android.ui.activity;
 
@@ -81,19 +80,13 @@ import java.io.IOException;
 public class Preferences extends PreferenceActivity
         implements StorageMigration.StorageMigrationProgressListener {
 
-    private static final String TAG = Preferences.class.getSimpleName();
-
     public final static String PREFERENCE_USE_FINGERPRINT = "use_fingerprint";
-
+    public static final String SYNCED_FOLDER_LIGHT_UPLOAD_ON_WIFI = "SYNCED_FOLDER_LIGHT_UPLOAD_ON_WIFI";
+    private static final String TAG = Preferences.class.getSimpleName();
     private static final String SCREEN_NAME = "Settings";
-
     private static final int ACTION_REQUEST_PASSCODE = 5;
     private static final int ACTION_CONFIRM_PASSCODE = 6;
-
     private static final int ACTION_REQUEST_CODE_DAVDROID_SETUP = 10;
-
-    public static final String SYNCED_FOLDER_LIGHT_UPLOAD_ON_WIFI = "SYNCED_FOLDER_LIGHT_UPLOAD_ON_WIFI";
-
     /**
      * The user's server base uri.
      */
@@ -108,12 +101,6 @@ public class Preferences extends PreferenceActivity
 
     private ListPreference mPrefStoragePath;
     private String mStoragePath;
-
-    public static class PreferenceKeys {
-        public static final String STORAGE_PATH = "storage_path";
-        public static final String INSTANT_UPLOAD_PATH = "instant_upload_path";
-        public static final String INSTANT_VIDEO_UPLOAD_PATH = "instant_video_upload_path";
-    }
 
     @SuppressWarnings("deprecation")
     @Override
@@ -474,6 +461,7 @@ public class Preferences extends PreferenceActivity
 
         boolean loggerEnabled = getResources().getBoolean(R.bool.logger_enabled) || BuildConfig.DEBUG ||
                 appPrefs.getBoolean("expert_mode", false);
+        loggerEnabled = false;
         Preference pLogger = findPreference("logger");
         if (pLogger != null) {
             if (loggerEnabled) {
@@ -852,5 +840,11 @@ public class Preferences extends PreferenceActivity
     @Override
     public void onCancelMigration() {
         // Migration was canceled so we don't do anything
+    }
+
+    public static class PreferenceKeys {
+        public static final String STORAGE_PATH = "storage_path";
+        public static final String INSTANT_UPLOAD_PATH = "instant_upload_path";
+        public static final String INSTANT_VIDEO_UPLOAD_PATH = "instant_video_upload_path";
     }
 }

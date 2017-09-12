@@ -34,7 +34,7 @@
     <string name="drawer_item_activities">Activities</string>
     <string name="drawer_item_notifications">Notifications</string>
     <string name="drawer_quota">%1$s of %2$s used</string>
-	<string name="drawer_close">Close</string>
+    <string name="drawer_close">Close</string>
     <string name="drawer_open">Open</string>
     <string name="prefs_category_general">General</string>
     <string name="prefs_category_more">More</string>
@@ -56,8 +56,8 @@
     <string name="prefs_feedback">Feedback</string>
     <string name="prefs_imprint">Imprint</string>
 
-	<string name="recommend_subject">"Try %1$s on your smartphone!"</string>
-	<string name="recommend_text">"I want to invite you to use %1$s on your smartphone.\nDownload here: %2$s"</string>
+    <string name="recommend_subject">"Try %1$s on your smartphone!"</string>
+    <string name="recommend_text">"I want to invite you to use %1$s on your smartphone.\nDownload here: %2$s"</string>
     <string name="recommend_urls">"%1$s or %2$s"</string>
 
     <string name="auth_check_server">Check server</string>
@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">File selected for upload not found. Please check whether the file exists.</string>
     <string name="uploader_error_message_source_file_not_copied">Could not copy file to a temporary folder. Try to resend it.</string>
     <string name="uploader_upload_files_behaviour">Upload option:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Move file to Nextcloud folder</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Move file to Cloudira folder</string>
     <string name="uploader_upload_files_behaviour_only_upload">Keep file in source folder</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Delete file from source folder</string>
     <string name="file_list_seconds_ago">seconds ago</string>
@@ -202,7 +202,7 @@
     <string name="foreign_files_remote_text">"Remote: %1$s"</string>
     <string name="upload_query_move_foreign_files">Insufficient space prevents copying the selected files into the %1$s folder. Would you like to move them there instead?</string>
     <string name="pass_code_enter_pass_code">Please enter your passcode</string>
-    
+
     <string name="pass_code_configure_your_pass_code">Enter your passcode</string>
     <string name="pass_code_configure_your_pass_code_explanation">The passcode will be requested every time the app is started</string>
     <string name="pass_code_reenter_your_pass_code">Please reenter your passcode</string>
@@ -211,7 +211,7 @@
     <string name="pass_code_wrong">Incorrect passcode</string>
     <string name="pass_code_removed">Passcode removed</string>
     <string name="pass_code_stored">Passcode stored</string>
-    
+
     <string name="media_notif_ticker">"%1$s music player"</string>
     <string name="media_state_playing">"%1$s (playing)"</string>
     <string name="media_state_loading">"%1$s (loading)"</string>
@@ -232,37 +232,37 @@
     <string name="media_play_pause_description">Play or pause button</string>
     <string name="media_forward_description">Fast forward button</string>
 
-	<string name="auth_getting_authorization">Getting authorization &#8230;</string>
-	<string name="auth_trying_to_login">Trying to log in &#8230;</string>
-	<string name="auth_no_net_conn_title">No network connection</string>
-	<string name="auth_nossl_plain_ok_title">Secure connection unavailable.</string>
-	<string name="auth_connection_established">Connection established</string>
-	<string name="auth_testing_connection">Testing connection</string>
-	<string name="auth_not_configured_title">Malformed server configuration</string>
-	<string name="auth_account_not_new">An account for the same user and server already exists on the device</string>
-	<string name="auth_account_not_the_same">The entered user does not match the user of this account</string>
-	<string name="auth_unknown_error_title">Unknown error occurred!</string>
-	<string name="auth_unknown_host_title">Could not find host</string>
-	<string name="auth_incorrect_path_title">Server not found</string>
-	<string name="auth_timeout_title">The server took too long to respond</string>
-	<string name="auth_incorrect_address_title">Wrong address format for server</string>
-	<string name="auth_ssl_general_error_title">SSL initialization failed</string>
-	<string name="auth_ssl_unverified_server_title">Could not verify the identity of the SSL server</string>
-	<string name="auth_bad_oc_version_title">Unrecognized server version</string>
-	<string name="auth_wrong_connection_title">Could not establish connection</string>
-	<string name="auth_secure_connection">Secure connection established</string>
-	<string name="auth_unauthorized">Wrong username or password</string>
-	<string name="auth_oauth_error">Unsuccessful authorization</string>
-	<string name="auth_oauth_error_access_denied">Access denied by authorization server</string>
-	<string name="auth_wtf_reenter_URL">Unexpected state, please enter the server address again</string>
-	<string name="auth_expired_oauth_token_toast">Your authorization expired. Please, authorize again</string>
-	<string name="auth_expired_basic_auth_toast">Please enter the current password</string>
-	<string name="auth_expired_saml_sso_token_toast">Your session expired. Please connect again</string>
-	<string name="auth_connecting_auth_server">Connecting to authentication server&#8230;</string>
-	<string name="auth_unsupported_auth_method">The server does not support this authentication method</string>
-	<string name="auth_unsupported_multiaccount">%1$s does not support multiple accounts</string>
-	<string name="auth_fail_get_user_name">Your server is not returning a correct user ID, please contact an administrator</string>
-	<string name="auth_can_not_auth_against_server">Cannot authenticate to this server</string>
+    <string name="auth_getting_authorization">Getting authorization &#8230;</string>
+    <string name="auth_trying_to_login">Trying to log in &#8230;</string>
+    <string name="auth_no_net_conn_title">No network connection</string>
+    <string name="auth_nossl_plain_ok_title">Secure connection unavailable.</string>
+    <string name="auth_connection_established">Connection established</string>
+    <string name="auth_testing_connection">Testing connection</string>
+    <string name="auth_not_configured_title">Malformed server configuration</string>
+    <string name="auth_account_not_new">An account for the same user and server already exists on the device</string>
+    <string name="auth_account_not_the_same">The entered user does not match the user of this account</string>
+    <string name="auth_unknown_error_title">Unknown error occurred!</string>
+    <string name="auth_unknown_host_title">Could not find host</string>
+    <string name="auth_incorrect_path_title">Server not found</string>
+    <string name="auth_timeout_title">The server took too long to respond</string>
+    <string name="auth_incorrect_address_title">Wrong address format for server</string>
+    <string name="auth_ssl_general_error_title">SSL initialization failed</string>
+    <string name="auth_ssl_unverified_server_title">Could not verify the identity of the SSL server</string>
+    <string name="auth_bad_oc_version_title">Unrecognized server version</string>
+    <string name="auth_wrong_connection_title">Could not establish connection</string>
+    <string name="auth_secure_connection">Secure connection established</string>
+    <string name="auth_unauthorized">Wrong username or password</string>
+    <string name="auth_oauth_error">Unsuccessful authorization</string>
+    <string name="auth_oauth_error_access_denied">Access denied by authorization server</string>
+    <string name="auth_wtf_reenter_URL">Unexpected state, please enter the server address again</string>
+    <string name="auth_expired_oauth_token_toast">Your authorization expired. Please, authorize again</string>
+    <string name="auth_expired_basic_auth_toast">Please enter the current password</string>
+    <string name="auth_expired_saml_sso_token_toast">Your session expired. Please connect again</string>
+    <string name="auth_connecting_auth_server">Connecting to authentication server&#8230;</string>
+    <string name="auth_unsupported_auth_method">The server does not support this authentication method</string>
+    <string name="auth_unsupported_multiaccount">%1$s does not support multiple accounts</string>
+    <string name="auth_fail_get_user_name">Your server is not returning a correct user ID, please contact an administrator</string>
+    <string name="auth_can_not_auth_against_server">Cannot authenticate to this server</string>
     <string name="auth_account_does_not_exist">Account does not exist on the device yet</string>
     <string name="auth_access_failed">Access failed</string>
 
@@ -292,10 +292,10 @@
     <string name="filedisplay_no_file_selected">No file selected</string>
     <string name="activity_chooser_title">Send link to &#8230;</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copying file from private storage</string>
-    
-    <string name="oauth_check_onoff">Log in with OAuth 2.0</string> 
+
+    <string name="oauth_check_onoff">Log in with OAuth 2.0</string>
     <string name="oauth_login_connection">Connecting to OAuth 2.0 server&#8230;</string>
-        
+
     <string name="ssl_validator_header">The identity of the site could not be verified</string>
     <string name="ssl_validator_reason_cert_not_trusted">- The server certificate is not trusted</string>
     <string name="ssl_validator_reason_cert_expired">- The server certificate expired</string>
@@ -342,10 +342,9 @@
     <string name="conflict_use_local_version">local version</string>
     <string name="conflict_use_server_version">server version</string>
 
-    <string name="preview_sorry">Sorry</string>
+    <string name="preview_sorry">Sorry.</string>
     <string name="preview_image_description">Image preview</string>
     <string name="preview_image_error_unknown_format">Unable to show image</string>
-    <string name="preview_image_error_no_local_file">There is no local file to preview</string>
 
     <string name="error__upload__local_file_not_copied">%1$s could not be copied to %2$s local folder</string>
     <string name="prefs_instant_upload_path_title">Instant upload folder</string>
@@ -354,11 +353,11 @@
     <string name="prefs_instant_upload_path_use_subfolders_title">Use subfolders</string>
     <string name="prefs_instant_upload_path_use_subfolders_summary">Store in subfolders based on year and month</string>
 
-	<string name="share_link_no_support_share_api">Sharing is not enabled on your server. Please contact your administrator.</string>
-	<string name="share_link_file_no_exist">Unable to share. Please check whether the file exists</string>
-	<string name="share_link_file_error">An error occurred while trying to share this file or folder</string>
-	<string name="unshare_link_file_no_exist">Unable to unshare. Please check whether the file exists</string>
-	<string name="unshare_link_file_error">An error occurred while trying to unshare this file or folder</string>
+    <string name="share_link_no_support_share_api">Sharing is not enabled on your server. Please contact your administrator.</string>
+    <string name="share_link_file_no_exist">Unable to share. Please check whether the file exists</string>
+    <string name="share_link_file_error">An error occurred while trying to share this file or folder</string>
+    <string name="unshare_link_file_no_exist">Unable to unshare. Please check whether the file exists</string>
+    <string name="unshare_link_file_error">An error occurred while trying to unshare this file or folder</string>
     <string name="update_link_file_no_exist">Unable to update. Please check whether the file exists</string>
     <string name="update_link_file_error">An error occurred while trying to update the share</string>
     <string name="share_link_password_title">Enter a password</string>
@@ -403,7 +402,7 @@
     <string name="file_migration_failed_not_enough_space">Error: Insufficient space</string>
     <string name="file_migration_failed_not_writable">Error: Destination file not writable</string>
     <string name="file_migration_failed_not_readable">Error: Source file not readable</string>
-    <string name="file_migration_failed_dir_already_exists">Error: Nextcloud directory already exists</string>
+    <string name="file_migration_failed_dir_already_exists">Error: Cloudira directory already exists</string>
     <string name="file_migration_failed_while_coping">Error: Failed during migration</string>
     <string name="file_migration_failed_while_updating_index">Error: Failed to updating index</string>
 
@@ -418,18 +417,18 @@
     <string name="drawer_manage_accounts">Manage accounts</string>
     <string name="auth_redirect_non_secure_connection_title">Secure connection redirected through an unsecured route.</string>
 
-	<string name="actionbar_logger">Logs</string>
-	<string name="log_send_history_button">Send history</string>
-	<string name="log_send_no_mail_app">No app for sending logs found. Please install an e-mail client.</string>
-	<string name="log_send_mail_subject">%1$s Android app logs</string>
-	<string name="log_progress_dialog_text">Loading data &#8230;</string>
+    <string name="actionbar_logger">Logs</string>
+    <string name="log_send_history_button">Send history</string>
+    <string name="log_send_no_mail_app">No app for sending logs found. Please install an e-mail client.</string>
+    <string name="log_send_mail_subject">%1$s Android app logs</string>
+    <string name="log_progress_dialog_text">Loading data &#8230;</string>
 
-	<string name="saml_authentication_required_text">Authentication required</string>
-	<string name="saml_authentication_wrong_pass">Wrong password</string>
-	<string name="actionbar_move">Move</string>
+    <string name="saml_authentication_required_text">Authentication required</string>
+    <string name="saml_authentication_wrong_pass">Wrong password</string>
+    <string name="actionbar_move">Move</string>
     <string name="actionbar_copy">Copy</string>
-	<string name="file_list_empty_moving">Nothing in here. You can add a folder.</string>
-	<string name="folder_picker_choose_button_text">Choose</string>
+    <string name="file_list_empty_moving">Nothing in here. You can add a folder.</string>
+    <string name="folder_picker_choose_button_text">Choose</string>
 
     <string name="move_file_not_found">Unable to move file. Please check whether it exists</string>
     <string name="move_file_invalid_into_descendent">It is not possible to move a folder into one of its own underlying folders</string>
@@ -447,13 +446,13 @@
     <string name="prefs_category_instant_uploading">Instant uploads</string>
     <string name="prefs_category_details">Details</string>
 
-	<string name="prefs_instant_video_upload_path_title">Video folder for instant uploads</string>
+    <string name="prefs_instant_video_upload_path_title">Video folder for instant uploads</string>
     <string name="sync_folder_failed_content">Synchronization of %1$s folder could not be completed</string>
 
-	<string name="shared_subject_header">shared</string>
-	<string name="with_you_subject_header">with you</string>
-    
-	<string name="subject_user_shared_with_you">%1$s shared \"%2$s\" with you</string>
+    <string name="shared_subject_header">shared</string>
+    <string name="with_you_subject_header">with you</string>
+
+    <string name="subject_user_shared_with_you">%1$s shared \"%2$s\" with you</string>
     <string name="subject_shared_with_you">\"%1$s\" has been shared with you</string>
 
     <string name="auth_refresh_button">Refresh connection</string>
@@ -544,7 +543,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">Awaiting charge</string>
     <string name="actionbar_search">Search</string>
-    <string name="files_drop_not_supported">This is a Nextcloud feature, please update.</string>
+    <string name="files_drop_not_supported">This is a Cloudira feature, please update.</string>
     <string name="learn_more">Learn more</string>
     <string name="drawer_synced_folders">Auto upload</string>
     <string name="drawer_participate">Participate</string>
@@ -558,7 +557,7 @@
     <string name="participate_release_candidate_text">The release candidate (RC) is a snapshot of the upcoming release and is expected to be stable. Testing your individual setup could help ensure this. Sign up for testing on the Play store or manually look in the \"Version\" section of F-Droid.</string>
     <string name="participate_contribute_headline">Actively Contribute</string>
     <string name="participate_contribute_irc_text">Join the chat on IRC:</string>
-    <string name="participate_contribute_irc_text_link" translatable="false"> &lt;font color=\"%1$s\">&lt;a href=\"%2$s\">#nextcloud-mobile&lt;/a>&lt;/font></string>
+    <string name="participate_contribute_irc_text_link" translatable="false"> &lt;font color=\"%1$s\">&lt;a href=\"%2$s\">#cloudira-mobile&lt;/a>&lt;/font></string>
     <string name="participate_contribute_forum_text">Help others on the</string>
     <string name="participate_contribute_forum_forum">forum</string>
     <string name="participate_contribute_forum_text_link" translatable="false">&lt;font color=\"%1$s\">&lt;a href=\"%2$s\">%3$s&lt;/a>&lt;/font></string>
@@ -688,7 +687,7 @@
     <string name="autoupload_create_new_custom_folder">Create new custom folder setup</string>
     <string name="synced_folders_configure_folders">Configure folders</string>
 
-    <string name="empty" translatable="false"/>
+    <string name="empty" translatable="false" />
     <string name="test_server_button">Test server connection</string>
     <string name="info_separator" translatable="false">,</string>
     <string name="resharing_is_not_allowed">Resharing is not allowed</string>
@@ -699,7 +698,4 @@
 
     <string name="foreground_service_upload">Uploading files&#8230;</string>
     <string name="foreground_service_download">Downloading files&#8230;</string>
-
-    <string name="common_warning" translatable="false">Warning</string>
-    <string name="corrupt_account_info" translatable="false">Accounts have been corrupted in case you have been using a release candidate of 2.0.0 between RC1 and RC5.\n\nWe are sorry to tell you that you need to remove the Nextcloud accounts from your device and need to re-login again completely in order to get fully working login-sessions on this device!</string>
 </resources>

@@ -56,7 +56,7 @@ public class NContentObserverJob extends JobService {
                         .schedule();
             }
 
-            FilesSyncHelper.scheduleNJobs(true, getApplicationContext());
+            FilesSyncHelper.scheduleNJobs(true);
         }
 
         return true;

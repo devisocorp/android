@@ -3,12 +3,12 @@
 
 	<!-- DropDown -->
 	<style name="Theme.ownCloud.DropDownStyle"
-		parent="style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+		parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
 		<!--<item name="android:background">@drawable/spinner_inner</item>-->
 	</style>
 	
 	<style name="Theme.ownCloud.IndeterminateStyle"
-		parent="style/Widget.AppCompat.ProgressBar">
+		parent="Widget.AppCompat.ProgressBar">
 	    <!--<item name="android:indeterminateDrawable">@drawable/abs__progress_medium_holo</item>-->
 	</style>
 

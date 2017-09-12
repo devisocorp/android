@@ -253,8 +253,9 @@ public class FilesSyncHelper {
         return false;
     }
 
-    public static void scheduleNJobs(boolean force, Context context) {
-        SyncedFolderProvider syncedFolderProvider = new SyncedFolderProvider(context.getContentResolver());
+    public static void scheduleNJobs(boolean force) {
+        SyncedFolderProvider syncedFolderProvider = new SyncedFolderProvider(MainApp.getAppContext().
+                getContentResolver());
 
 
         boolean hasVideoFolders = false;
@@ -281,7 +282,7 @@ public class FilesSyncHelper {
             }
     }
 
-    public static void scheduleFilesSyncIfNeeded(Context context) {
+    public static void scheduleFilesSyncIfNeeded() {
         // always run this because it also allows us to perform retries of manual uploads
         new JobRequest.Builder(FilesSyncJob.TAG)
                 .setPeriodic(900000L, 300000L)
@@ -289,9 +290,7 @@ public class FilesSyncHelper {
                 .build()
                 .schedule();
 
-        if (context != null) {
-            scheduleNJobs(false, context);
-        }
+        scheduleNJobs(false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

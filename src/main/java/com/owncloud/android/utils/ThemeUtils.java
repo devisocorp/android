@@ -94,13 +94,13 @@ public class ThemeUtils {
     }
 
     public static int primaryColor(Account account) {
-        OCCapability capability = getCapability(account);
-
-        try {
-            return Color.parseColor(capability.getServerColor());
-        } catch (Exception e) {
+//        OCCapability capability = getCapability(account);
+//
+//        try {
+//            return Color.parseColor(capability.getServerColor());
+//        } catch (Exception e) {
             return MainApp.getAppContext().getResources().getColor(R.color.primary);
-        }
+//        }
     }
 
     public static boolean themingEnabled() {

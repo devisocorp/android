@@ -64,7 +64,7 @@
     <string name="uploader_error_message_no_file_to_upload">Datele primite nu includ un fișier valid</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s nu are permisiunea de a citi un fișier primit</string>
     <string name="uploader_upload_files_behaviour">Opțiune pentru încărcare:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Mutați fișierul în dosarul Nextcloud</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Mutați fișierul în dosarul Cloudira</string>
     <string name="uploader_upload_files_behaviour_only_upload">Păstrați fișierul in dosarul sursă</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Ștergeți fișierul din dosarul sursă</string>
     <string name="file_list_seconds_ago">secunde în urmă</string>
@@ -372,7 +372,7 @@
     <string name="confirmation_remove_files_alert">Doriți să ștergeți elementele selectate?</string>
     <string name="confirmation_remove_folders_alert">Doriți să ștergeți elementele selectate și conținutul lor?</string>
     <string name="actionbar_search">Caută</string>
-    <string name="files_drop_not_supported">Aceasta este o funcționalitate Nextcloud, vă rugăm să actulizați aplicația.</string>
+    <string name="files_drop_not_supported">Aceasta este o funcționalitate Cloudira, vă rugăm să actulizați aplicația.</string>
     <string name="learn_more">Află mai mult</string>
     <string name="drawer_participate">Participă</string>
     <string name="participate_release_candidate_headline">Candidatul pentru lansare</string>

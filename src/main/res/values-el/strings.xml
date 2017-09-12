@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">Το αρχείο προς αποστολή δεν βρέθηκε στην τοποθεσία. Παρακαλώ ελέγξτε εάν υπάρχει το αρχείο.</string>
     <string name="uploader_error_message_source_file_not_copied">Παρουσιάστηκε σφάλμα κατά την αντιγραφή του αρχείου στον προσωρινό φάκελο. Παρακαλούμε δοκιμάστε να στείλετε ξανά.</string>
     <string name="uploader_upload_files_behaviour">Επιλογή μεταφόρτωσης:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Μετακίνηση αρχείου στον φάκελο Nextcloud</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Μετακίνηση αρχείου στον φάκελο Cloudira</string>
     <string name="uploader_upload_files_behaviour_only_upload">Διατήρηση του αρχείου στον πηγαίο φάκελο</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Διαγραφή αρχείου από τον πηγαίο φάκελο</string>
     <string name="file_list_seconds_ago">δευτερόλεπτα πριν</string>
@@ -341,9 +341,10 @@
     <string name="conflict_use_local_version">τοπική έκδοση</string>
     <string name="conflict_use_server_version">έκδοση διακομιστή</string>
 
-    <string name="preview_sorry">Σας ζητούμε συγγνώμη</string>
+    <string name="preview_sorry">Σας ζητούμε συγγνώμη.</string>
     <string name="preview_image_description">Προεπισκόπηση εικόνας</string>
     <string name="preview_image_error_unknown_format">Αδυναμία προβολής εικόνας</string>
+
     <string name="error__upload__local_file_not_copied">Το %1$s δεν μπόρεσε να αντιγραφεί στον τοπικό φάκελο %2$s</string>
     <string name="prefs_instant_upload_path_title">Φάκελος άμεσης μεταφόρτωσης</string>
     <string name="prefs_synced_folders_local_path_title">Τοπικός φάκελος</string>
@@ -400,7 +401,7 @@
     <string name="file_migration_failed_not_enough_space">Σφάλμα: Μη επαρκής χώρος</string>
     <string name="file_migration_failed_not_writable">Λάθος: Αρχείο προορισμού μη εγγράψιμο</string>
     <string name="file_migration_failed_not_readable">Λάθος: Αδυναμία ανάγνωσης πηγαίου αρχείου </string>
-    <string name="file_migration_failed_dir_already_exists">Λάθος: Ο φάκελος Nextcloud υπάρχει ήδη</string>
+    <string name="file_migration_failed_dir_already_exists">Λάθος: Ο φάκελος Cloudira υπάρχει ήδη</string>
     <string name="file_migration_failed_while_coping">Λάθος: Αποτυχία κατά την μετάβαση</string>
     <string name="file_migration_failed_while_updating_index">Σφάλμα: Αποτυχία ενημέρωσης ευρετηρίου</string>
 
@@ -541,7 +542,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">Αναμονή για φόρτιση συσκευής</string>
     <string name="actionbar_search">Αναζήτηση</string>
-    <string name="files_drop_not_supported">Αυτό είναι χαρακτηριστικό του Nextcloud, παρακαλούμε ενημερώστε.</string>
+    <string name="files_drop_not_supported">Αυτό είναι χαρακτηριστικό του Cloudira, παρακαλούμε ενημερώστε.</string>
     <string name="learn_more">Μάθετε περισσότερα</string>
     <string name="drawer_synced_folders">Αυτόματη μεταφόρτωση</string>
     <string name="drawer_participate">Συμμετοχή</string>

@@ -79,7 +79,7 @@
     <string name="uploader_error_message_source_file_not_found">選択したアップロードするファイルが見つかりません。ファイルが存在するかどうか確認してください。</string>
     <string name="uploader_error_message_source_file_not_copied">ファイルを一時フォルダーにコピーできませんでした。再送してください。</string>
     <string name="uploader_upload_files_behaviour">アップロードオプション:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">ファイルをNextcloudのフォルダーに移動</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">ファイルをCloudiraのフォルダーに移動</string>
     <string name="uploader_upload_files_behaviour_only_upload">ファイルをソースフォルダに保持する</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">ファイルをソースフォルダから削除する</string>
     <string name="file_list_seconds_ago">数秒前</string>
@@ -428,7 +428,7 @@
     <string name="confirmation_remove_files_alert">本当に選択したものを削除しますか？</string>
     <string name="confirmation_remove_folders_alert">本当に 洗濯したアイテム およびそのコンテンツを削除してもよろしいですか？</string>
     <string name="actionbar_search">検索</string>
-    <string name="files_drop_not_supported">これはNextCloudの機能です。更新してください。</string>
+    <string name="files_drop_not_supported">これはCloudiraの機能です。更新してください。</string>
     <string name="learn_more">もっと見る</string>
     <string name="drawer_participate">参加する</string>
     <string name="participate_beta_headline">開発バージョンをテスト</string>

@@ -78,7 +78,7 @@
     <string name="uploader_error_message_source_file_not_found">該位置無法找到要上傳的檔案，請檢查該檔案是否存在</string>
     <string name="uploader_error_message_source_file_not_copied">複製檔案到暫存資料夾時發生錯誤，請再試一次</string>
     <string name="uploader_upload_files_behaviour">上傳選項：</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">移動檔案到 Nextcloud 資料夾</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">移動檔案到 Cloudira 資料夾</string>
     <string name="uploader_upload_files_behaviour_only_upload">在來源資料夾保留檔案</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">刪除來源資料夾中的檔案</string>
     <string name="file_list_seconds_ago">幾秒前</string>
@@ -329,6 +329,7 @@
     <string name="preview_sorry">很抱歉</string>
     <string name="preview_image_description">圖片預覽</string>
     <string name="preview_image_error_unknown_format">無法顯示圖像</string>
+
     <string name="error__upload__local_file_not_copied">%1$s 無法被複製到本地資料夾 %2$s</string>
     <string name="prefs_instant_upload_path_title">即時上傳資料夾</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">使用子資料夾</string>
@@ -383,7 +384,7 @@
     <string name="file_migration_failed_not_enough_space">錯誤: 空間不足</string>
     <string name="file_migration_failed_not_writable">錯誤: 檔案不能寫入</string>
     <string name="file_migration_failed_not_readable">錯誤: 檔案不能讀取</string>
-    <string name="file_migration_failed_dir_already_exists">錯誤:Nextcloud目錄已存在</string>
+    <string name="file_migration_failed_dir_already_exists">錯誤:Cloudira目錄已存在</string>
     <string name="file_migration_failed_while_coping">錯誤:移動中出現失敗</string>
     <string name="file_migration_failed_while_updating_index">錯誤:更新目錄失敗</string>
 
@@ -518,7 +519,7 @@
     <string name="maintenance_mode">伺服器正處於維護模式。</string>
     <string name="uploads_view_upload_status_waiting_for_charging">等待充電</string>
     <string name="actionbar_search">搜尋</string>
-    <string name="files_drop_not_supported">這是 Nextcloud 的功能，請更新</string>
+    <string name="files_drop_not_supported">這是 Cloudira 的功能，請更新</string>
     <string name="learn_more">瞭解更多</string>
     <string name="drawer_participate">參與</string>
     <string name="participate_testing_headline">協助測試</string>

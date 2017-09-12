@@ -82,7 +82,7 @@
 </string>
     <string name="uploader_error_message_source_file_not_copied">Es ist ein Fehler beim Kopieren dieser Datei in einen temporären Ordner aufgetreten. Bitte erneut versuchen die Datei zu senden.</string>
     <string name="uploader_upload_files_behaviour">Upload Option:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Datei in Nextcloud Ordner verschieben</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Datei in Cloudira Ordner verschieben</string>
     <string name="uploader_upload_files_behaviour_only_upload">Hochladen und im Quellordner behalten</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Hochladen und Datei im Quellordner löschen</string>
     <string name="file_list_seconds_ago">Gerade eben</string>
@@ -342,10 +342,9 @@
     <string name="conflict_use_local_version">Lokale Version</string>
     <string name="conflict_use_server_version">Serverversion</string>
 
-    <string name="preview_sorry">Entschuldigung</string>
+    <string name="preview_sorry">Entschuldigung.</string>
     <string name="preview_image_description">Bildvorschau</string>
     <string name="preview_image_error_unknown_format">Bild kann nicht angezeigt werden</string>
-    <string name="preview_image_error_no_local_file">Keine lokale Datei für die Vorschau vorhanden</string>
 
     <string name="error__upload__local_file_not_copied">%1$s konnte nicht in den lokalen %2$s Ordner kopiert werden</string>
     <string name="prefs_instant_upload_path_title">Sofort-Upload-Ordner</string>
@@ -403,7 +402,7 @@
     <string name="file_migration_failed_not_enough_space">Fehler: Nicht ausreichender Speicherplatz</string>
     <string name="file_migration_failed_not_writable">Fehler: Für das Ziel existieren keine Schreibrechte</string>
     <string name="file_migration_failed_not_readable">Fehler: Quelldatei kann nicht gelesen werden</string>
-    <string name="file_migration_failed_dir_already_exists">Fehler: Nextcloud-Verzeichnis existiert bereits</string>
+    <string name="file_migration_failed_dir_already_exists">Fehler: Cloudira-Verzeichnis existiert bereits</string>
     <string name="file_migration_failed_while_coping">Fehler: Fehler bei der Migration</string>
     <string name="file_migration_failed_while_updating_index">Fehler: Aktualisierung des Index fehlgeschlagen</string>
 
@@ -544,7 +543,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">Warte auf das Aufladen des Gerätes</string>
     <string name="actionbar_search">Suche</string>
-    <string name="files_drop_not_supported">Dies ist eine Nextcloud Funktion, bitte updaten.</string>
+    <string name="files_drop_not_supported">Dies ist eine Cloudira Funktion, bitte updaten.</string>
     <string name="learn_more">Mehr</string>
     <string name="drawer_synced_folders">Automatisches Hochladen</string>
     <string name="drawer_participate">Mitmachen</string>
@@ -685,5 +684,4 @@
 
     <string name="foreground_service_upload">Dateien hochladen&#8230;</string>
     <string name="foreground_service_download">Dateien herunterladen&#8230;</string>
-
-    </resources>
+</resources>

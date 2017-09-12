@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">Le fichier à téléverser n\'a pas été trouvé. Merci de vérifier si ce fichier existe.</string>
     <string name="uploader_error_message_source_file_not_copied">Impossible de copier le fichier vers un dossier temporaire. Merci de recommencer votre envoi.</string>
     <string name="uploader_upload_files_behaviour">Option de téléversement :</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Déplacer le fichier dans le dossier Nextcloud</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Déplacer le fichier dans le dossier Cloudira</string>
     <string name="uploader_upload_files_behaviour_only_upload">Conserver le fichier dans le dossier original</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Supprimer le fichier du dossier original</string>
     <string name="file_list_seconds_ago">à l\'instant</string>
@@ -341,10 +341,9 @@
     <string name="conflict_use_local_version">version locale</string>
     <string name="conflict_use_server_version">version serveur</string>
 
-    <string name="preview_sorry">Désolé</string>
+    <string name="preview_sorry">Désolé.</string>
     <string name="preview_image_description">Prévisualisation de l\'image</string>
     <string name="preview_image_error_unknown_format">L\'image ne peut pas être affichée</string>
-    <string name="preview_image_error_no_local_file">Il n\'y a aucun fichier local à prévisualiser</string>
 
     <string name="error__upload__local_file_not_copied">%1$s n\'a pas pu être copié dans le dossier local %2$s</string>
     <string name="prefs_instant_upload_path_title">Téléversement immédiat du dossier</string>
@@ -402,7 +401,7 @@
     <string name="file_migration_failed_not_enough_space">Erreur : Espace insuffisant</string>
     <string name="file_migration_failed_not_writable">Erreur : Le fichier de destination n\'est pas modifiable</string>
     <string name="file_migration_failed_not_readable">Erreur : Le fichier source n\'est pas lisible</string>
-    <string name="file_migration_failed_dir_already_exists">Erreur : Le dossier Nextcloud existe déjà</string>
+    <string name="file_migration_failed_dir_already_exists">Erreur : Le dossier Cloudira existe déjà</string>
     <string name="file_migration_failed_while_coping">Erreur : Echec lors de la migration</string>
     <string name="file_migration_failed_while_updating_index">Erreur : Echec lors de la mise à jour de l\'index</string>
 
@@ -543,7 +542,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">En attente de recharge de l\'appareil</string>
     <string name="actionbar_search">Rechercher</string>
-    <string name="files_drop_not_supported">Il s\'agit d\'une fonctionnalité de Nextcloud. Veuillez mettre à jour..</string>
+    <string name="files_drop_not_supported">Il s\'agit d\'une fonctionnalité de Cloudira ; veuillez mettre à jour..</string>
     <string name="learn_more">En apprendre plus</string>
     <string name="drawer_synced_folders">Téléversement automatique</string>
     <string name="drawer_participate">Participer</string>
@@ -681,8 +680,5 @@
     <string name="whats_new_fingerprint_content">Utilisez votre empreinte digitale pour déverrouiller l’application</string>
     <string name="fallback_weblogin_back">RETOUR</string>
     <string name="fallback_weblogin_text">Revenir à l\'ancienne méthode de connexion</string>
-
-    <string name="foreground_service_upload">Envoi des fichiers en cours&#8230;</string>
-    <string name="foreground_service_download">Téléchargement des fichiers en cours&#8230;</string>
 
     </resources>

@@ -502,7 +502,7 @@ public class SyncedFoldersActivity extends FileActivity implements SyncedFolderA
             String syncedFolderInitiatedKey = "syncedFolderIntitiated_" + syncedFolderDisplayItem.getId();
             arbitraryDataProvider.deleteKeyForAccount("global", syncedFolderInitiatedKey);
         }
-        FilesSyncHelper.scheduleNJobs(false, getApplicationContext());
+        FilesSyncHelper.scheduleNJobs(false);
 
     }
 
@@ -555,7 +555,7 @@ public class SyncedFoldersActivity extends FileActivity implements SyncedFolderA
                     String syncedFolderInitiatedKey = "syncedFolderIntitiated_" + newCustomFolder.getId();
                     arbitraryDataProvider.deleteKeyForAccount("global", syncedFolderInitiatedKey);
                 }
-                FilesSyncHelper.scheduleNJobs(false, getApplicationContext());
+                FilesSyncHelper.scheduleNJobs(false);
             }
             mAdapter.addSyncFolderItem(newCustomFolder);
         } else {
@@ -575,7 +575,7 @@ public class SyncedFoldersActivity extends FileActivity implements SyncedFolderA
                         String syncedFolderInitiatedKey = "syncedFolderIntitiated_" + item.getId();
                         arbitraryDataProvider.deleteKeyForAccount("global", syncedFolderInitiatedKey);
                     }
-                    FilesSyncHelper.scheduleNJobs(false, getApplicationContext());
+                    FilesSyncHelper.scheduleNJobs(false);
                 }
             } else {
                 // existing synced folder setup to be updated
@@ -586,7 +586,7 @@ public class SyncedFoldersActivity extends FileActivity implements SyncedFolderA
                     String syncedFolderInitiatedKey = "syncedFolderIntitiated_" + item.getId();
                     arbitraryDataProvider.deleteKeyForAccount("global", syncedFolderInitiatedKey);
                 }
-                FilesSyncHelper.scheduleNJobs(false, getApplicationContext());
+                FilesSyncHelper.scheduleNJobs(false);
             }
 
             mAdapter.setSyncFolderItem(syncedFolder.getSection(), item);

@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">Skedari i përzgjedhur për ngarkim nuk u gjet. Ju lutem kontrolloni nëse skedari ekziston.</string>
     <string name="uploader_error_message_source_file_not_copied">Ndodhi një gabim teksa kopjohej skedari në një dosje e përkohshme. Ju lutem, provo ta ridërgosh.</string>
     <string name="uploader_upload_files_behaviour">Mundësitë e ngarkimit:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Lëviz kartelën tek dosja e Nextcloud-it</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Lëviz kartelën tek dosja e Cloudira-it</string>
     <string name="uploader_upload_files_behaviour_only_upload">Mbani kartelën tek dosja burim</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Fshij kartelën nga dosja burim</string>
     <string name="file_list_seconds_ago">sekonda më parë</string>
@@ -341,9 +341,10 @@
     <string name="conflict_use_local_version">versionin vendor</string>
     <string name="conflict_use_server_version">versionin e shërbyesit</string>
 
-    <string name="preview_sorry">Më vjen keq</string>
+    <string name="preview_sorry">Më vjen keq.</string>
     <string name="preview_image_description">Parapamje figure</string>
     <string name="preview_image_error_unknown_format">Kjo figurë nuk mund të shfaqet</string>
+
     <string name="error__upload__local_file_not_copied">%1$s s\’u kopjua dot te dosja vendore %2$s</string>
     <string name="prefs_instant_upload_path_title">Dosja e ngarkimit të çastit </string>
     <string name="prefs_synced_folders_local_path_title">Dosje lokale</string>
@@ -400,7 +401,7 @@
     <string name="file_migration_failed_not_enough_space">Gabim: Hapësirë e pamjaftueshme</string>
     <string name="file_migration_failed_not_writable">Gabim: Skadari destinacion jo i shkruajtshëm</string>
     <string name="file_migration_failed_not_readable">Gabim: Skedari burim jo i lexueshëm</string>
-    <string name="file_migration_failed_dir_already_exists">Gabim: Direktoria Nextcloud ekziston tashme</string>
+    <string name="file_migration_failed_dir_already_exists">Gabim: Direktoria Cloudira ekziston tashme</string>
     <string name="file_migration_failed_while_coping">Gabim: Dështoi gjatë migrimit</string>
     <string name="file_migration_failed_while_updating_index">Gabim: Dështoi në përditësimin e indeksit</string>
 
@@ -541,7 +542,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">Duke pritur që pajisja të karikohet</string>
     <string name="actionbar_search">Kërkoni</string>
-    <string name="files_drop_not_supported">Ky është një tipar i Nextcloud-it, ju lutemi përditësojeni.</string>
+    <string name="files_drop_not_supported">Ky është një tipar i Cloudira-it, ju lutemi përditësojeni.</string>
     <string name="learn_more">Mësoni më shumë</string>
     <string name="drawer_synced_folders">Ngarkim automatik</string>
     <string name="drawer_participate">Merni pjesë</string>

@@ -73,7 +73,7 @@
     <string name="uploader_error_message_no_file_to_upload">Modtagne data indeholdt ikke en gyldig fil.</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s har ikke tilladelse til at læse en modtaget fil</string>
     <string name="uploader_upload_files_behaviour">Upload muligheder</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Flyt fil til Nextcloud mappe</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Flyt fil til Cloudira mappe</string>
     <string name="uploader_upload_files_behaviour_only_upload">Behold filen i source-mappen</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Slet filen fra source-mappen</string>
     <string name="file_list_seconds_ago">sekunder siden</string>
@@ -372,7 +372,7 @@
     <string name="manage_space_error">Visse filer kunne ikke slettes.</string>
 
     <string name="actionbar_search">Søg</string>
-    <string name="files_drop_not_supported">Dette er en Nextcloud feature, opdater venligst</string>
+    <string name="files_drop_not_supported">Dette er en Cloudira feature, opdater venligst</string>
     <string name="learn_more">Lær mere</string>
     <string name="drawer_participate">Deltag</string>
     <string name="participate_release_candidate_headline">Release candidate</string>

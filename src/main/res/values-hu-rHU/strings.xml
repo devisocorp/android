@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">A feltöltésre kiválasztott fájl nem található. Kérem ellenőrizze, hogy létezik-e.</string>
     <string name="uploader_error_message_source_file_not_copied">A fájl nem másolható az ideiglenes tárhelyre. Próbálja újraküldeni.</string>
     <string name="uploader_upload_files_behaviour">Feltöltési lehetőségek:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Helyezd át fájlt a Nextcoud mappába</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Helyezd át fájlt a Cloudira mappába</string>
     <string name="uploader_upload_files_behaviour_only_upload">A fájl maradjon az eredeti mappában</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">A fájl törlése az eredeti mappábó</string>
     <string name="file_list_seconds_ago">pár másodperce</string>
@@ -427,7 +427,7 @@
     <string name="confirmation_remove_files_alert">Biztos, hogy el akarod távolítani a kiválasztott elemeket?</string>
     <string name="confirmation_remove_folders_alert">Biztos, hogy el akarod távolítani a kiválasztott elemeket és azok tartalmát?</string>
     <string name="actionbar_search">Keresés</string>
-    <string name="files_drop_not_supported">Ez egy Nextcloud funkció, kérlek frissíts.</string>
+    <string name="files_drop_not_supported">Ez egy Cloudira funkció, kérlek frissíts.</string>
     <string name="learn_more">Tudj meg többet</string>
     <string name="drawer_synced_folders">Automatikus feltöltés</string>
     <string name="drawer_participate">Részvétel</string>

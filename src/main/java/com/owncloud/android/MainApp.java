@@ -51,7 +51,6 @@ import com.owncloud.android.lib.common.OwnCloudClientManagerFactory.Policy;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.activity.Preferences;
 import com.owncloud.android.ui.activity.SyncedFoldersActivity;
-import com.owncloud.android.ui.activity.WhatsNewActivity;
 import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.FilesSyncHelper;
 import com.owncloud.android.utils.PermissionUtil;
@@ -67,7 +66,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Main Application of the project
- *
+ * <p>
  * Contains methods to build the "static" strings. These strings were before constants in different
  * classes
  */
@@ -91,86 +90,6 @@ public class MainApp extends MultiDexApplication {
     @SuppressWarnings("unused")
     private boolean mBound;
 
-    @SuppressFBWarnings("ST")
-    public void onCreate() {
-        super.onCreate();
-        JobManager.create(this).addJobCreator(new NCJobCreator());
-        MainApp.mContext = getApplicationContext();
-
-        if (!getResources().getBoolean(R.bool.analytics_enabled)) {
-            AnalyticsUtils.disableAnalytics();
-        }
-
-        SharedPreferences appPrefs =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        MainApp.storagePath = appPrefs.getString(Preferences.PreferenceKeys.STORAGE_PATH, Environment.
-                getExternalStorageDirectory().getAbsolutePath());
-
-        boolean isSamlAuth = AUTH_ON.equals(getString(R.string.auth_method_saml_web_sso));
-
-        OwnCloudClientManagerFactory.setUserAgent(getUserAgent());
-        if (isSamlAuth) {
-            OwnCloudClientManagerFactory.setDefaultPolicy(Policy.SINGLE_SESSION_PER_ACCOUNT);
-        } else {
-            OwnCloudClientManagerFactory
-                    .setDefaultPolicy(Policy.SINGLE_SESSION_PER_ACCOUNT_IF_SERVER_SUPPORTS_SERVER_MONITORING);
-        }
-
-        // initialise thumbnails cache on background thread
-        new ThumbnailsCacheManager.InitDiskCacheTask().execute();
-
-        if (BuildConfig.DEBUG) {
-            // use app writable dir, no permissions needed
-            Log_OC.startLogging(getAppContext());
-            Log_OC.d("Debug", "start logging");
-        }
-
-        initAutoUpload();
-
-        // register global protection with pass code
-        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onCreate(Bundle) starting");
-                WhatsNewActivity.runIfNeeded(activity);
-                PassCodeManager.getPassCodeManager().onActivityCreated(activity);
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onStart() starting");
-                PassCodeManager.getPassCodeManager().onActivityStarted(activity);
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onResume() starting");
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onPause() ending");
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onStop() ending");
-                PassCodeManager.getPassCodeManager().onActivityStopped(activity);
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onSaveInstanceState(Bundle) starting");
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-                Log_OC.d(activity.getClass().getSimpleName(), "onDestroy() ending");
-            }
-        });
-    }
-
     public static void initAutoUpload() {
         updateToAutoUpload();
         cleanOldEntries();
@@ -186,7 +105,7 @@ public class MainApp extends MultiDexApplication {
 
         initiateExistingAutoUploadEntries();
 
-        FilesSyncHelper.scheduleFilesSyncIfNeeded(mContext);
+        FilesSyncHelper.scheduleFilesSyncIfNeeded();
         FilesSyncHelper.restartJobsIfNeeded();
 
         ReceiversHelper.registerNetworkChangeReceiver();
@@ -212,9 +131,9 @@ public class MainApp extends MultiDexApplication {
         MainApp.storagePath = path;
     }
 
-    // Methods to obtain Strings referring app_name 
-    //   From AccountAuthenticator 
-    //   public static final String ACCOUNT_TYPE = "owncloud";    
+    // Methods to obtain Strings referring app_name
+    //   From AccountAuthenticator
+    //   public static final String ACCOUNT_TYPE = "owncloud";
     public static String getAccountType() {
         return getAppContext().getResources().getString(R.string.account_type);
     }
@@ -241,7 +160,7 @@ public class MainApp extends MultiDexApplication {
         }
     }
 
-    //  From AccountAuthenticator 
+    //  From AccountAuthenticator
     //  public static final String AUTHORITY = "org.owncloud";
     public static String getAuthority() {
         return getAppContext().getResources().getString(R.string.authority);
@@ -253,7 +172,7 @@ public class MainApp extends MultiDexApplication {
         return getAppContext().getResources().getString(R.string.authority);
     }
 
-    //  From ProviderMeta 
+    //  From ProviderMeta
     //  public static final String DB_FILE = "owncloud.db";
     public static String getDBFile() {
         return getAppContext().getResources().getString(R.string.db_file);
@@ -308,50 +227,50 @@ public class MainApp extends MultiDexApplication {
     }
 
     private static void updateToAutoUpload() {
-            Context context = getAppContext();
-            if (PreferenceManager.instantPictureUploadEnabled(context) ||
-                            PreferenceManager.instantPictureUploadEnabled(context)) {
+        Context context = getAppContext();
+        if (PreferenceManager.instantPictureUploadEnabled(context) ||
+                PreferenceManager.instantPictureUploadEnabled(context)) {
 
-                // remove legacy shared preferences
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                editor.remove("instant_uploading")
-                        .remove("instant_video_uploading")
-                        .remove("instant_upload_path")
-                        .remove("instant_upload_path_use_subfolders")
-                        .remove("instant_upload_on_wifi")
-                        .remove("instant_upload_on_charging")
-                        .remove("instant_video_upload_path")
-                        .remove("instant_video_upload_path_use_subfolders")
-                        .remove("instant_video_upload_on_wifi")
-                        .remove("instant_video_uploading")
-                        .remove("instant_video_upload_on_charging")
-                        .remove("prefs_instant_behaviour").apply();
+            // remove legacy shared preferences
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+            editor.remove("instant_uploading")
+                    .remove("instant_video_uploading")
+                    .remove("instant_upload_path")
+                    .remove("instant_upload_path_use_subfolders")
+                    .remove("instant_upload_on_wifi")
+                    .remove("instant_upload_on_charging")
+                    .remove("instant_video_upload_path")
+                    .remove("instant_video_upload_path_use_subfolders")
+                    .remove("instant_video_upload_on_wifi")
+                    .remove("instant_video_uploading")
+                    .remove("instant_video_upload_on_charging")
+                    .remove("prefs_instant_behaviour").apply();
 
-                // show info pop-up
-                try {
-                    new AlertDialog.Builder(context, R.style.Theme_ownCloud_Dialog)
-                            .setTitle(R.string.drawer_synced_folders)
-                            .setMessage(R.string.synced_folders_new_info)
-                            .setPositiveButton(R.string.drawer_open, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // show Auto Upload
-                                    Intent folderSyncIntent = new Intent(context,
-                                            SyncedFoldersActivity.class);
-                                    dialog.dismiss();
-                                    context.startActivity(folderSyncIntent);
-                                }
-                            })
-                            .setNegativeButton(R.string.drawer_close, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setIcon(R.drawable.nav_synced_folders)
-                            .show();
-                } catch (WindowManager.BadTokenException e) {
-                    Log_OC.i(TAG, "Error showing Auto Upload Update dialog, so skipping it: " + e.getMessage());
-                }
+            // show info pop-up
+            try {
+                new AlertDialog.Builder(context, R.style.Theme_ownCloud_Dialog)
+                        .setTitle(R.string.drawer_synced_folders)
+                        .setMessage(R.string.synced_folders_new_info)
+                        .setPositiveButton(R.string.drawer_open, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // show Auto Upload
+                                Intent folderSyncIntent = new Intent(context,
+                                        SyncedFoldersActivity.class);
+                                dialog.dismiss();
+                                context.startActivity(folderSyncIntent);
+                            }
+                        })
+                        .setNegativeButton(R.string.drawer_close, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(R.drawable.nav_synced_folders)
+                        .show();
+            } catch (WindowManager.BadTokenException e) {
+                Log_OC.i(TAG, "Error showing Auto Upload Update dialog, so skipping it: " + e.getMessage());
             }
+        }
     }
 
     private static void updateAutoUploadEntries() {
@@ -468,5 +387,85 @@ public class MainApp extends MultiDexApplication {
                 PreferenceManager.setLegacyClean(context, true);
             }
         }
+    }
+
+    @SuppressFBWarnings("ST")
+    public void onCreate() {
+        super.onCreate();
+        JobManager.create(this).addJobCreator(new NCJobCreator());
+        MainApp.mContext = getApplicationContext();
+
+        if (!getResources().getBoolean(R.bool.analytics_enabled)) {
+            AnalyticsUtils.disableAnalytics();
+        }
+
+        SharedPreferences appPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        MainApp.storagePath = appPrefs.getString(Preferences.PreferenceKeys.STORAGE_PATH, Environment.
+                getExternalStorageDirectory().getAbsolutePath());
+
+        boolean isSamlAuth = AUTH_ON.equals(getString(R.string.auth_method_saml_web_sso));
+
+        OwnCloudClientManagerFactory.setUserAgent(getUserAgent());
+        if (isSamlAuth) {
+            OwnCloudClientManagerFactory.setDefaultPolicy(Policy.SINGLE_SESSION_PER_ACCOUNT);
+        } else {
+            OwnCloudClientManagerFactory
+                    .setDefaultPolicy(Policy.SINGLE_SESSION_PER_ACCOUNT_IF_SERVER_SUPPORTS_SERVER_MONITORING);
+        }
+
+        // initialise thumbnails cache on background thread
+        new ThumbnailsCacheManager.InitDiskCacheTask().execute();
+
+        if (BuildConfig.DEBUG) {
+            // use app writable dir, no permissions needed
+            Log_OC.startLogging(getAppContext());
+            Log_OC.d("Debug", "start logging");
+        }
+
+        initAutoUpload();
+
+        // register global protection with pass code
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onCreate(Bundle) starting");
+//                WhatsNewActivity.runIfNeeded(activity);
+                PassCodeManager.getPassCodeManager().onActivityCreated(activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onStart() starting");
+                PassCodeManager.getPassCodeManager().onActivityStarted(activity);
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onResume() starting");
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onPause() ending");
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onStop() ending");
+                PassCodeManager.getPassCodeManager().onActivityStopped(activity);
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onSaveInstanceState(Bundle) starting");
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                Log_OC.d(activity.getClass().getSimpleName(), "onDestroy() ending");
+            }
+        });
     }
 }

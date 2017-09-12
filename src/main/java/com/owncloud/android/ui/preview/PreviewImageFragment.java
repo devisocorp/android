@@ -34,7 +34,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.DisplayMetrics;
@@ -122,7 +121,7 @@ public class PreviewImageFragment extends FileFragment {
      *                              {@link FragmentStatePagerAdapter}
      *                              ; TODO better solution
      */
-    public static PreviewImageFragment newInstance(@NonNull OCFile imageFile, boolean ignoreFirstSavedState) {
+    public static PreviewImageFragment newInstance(OCFile imageFile, boolean ignoreFirstSavedState) {
         PreviewImageFragment frag = new PreviewImageFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_FILE, imageFile);
@@ -153,7 +152,7 @@ public class PreviewImageFragment extends FileFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        setFile(args.getParcelable(ARG_FILE));
+        setFile((OCFile) args.getParcelable(ARG_FILE));
         // TODO better in super, but needs to check ALL the class extending FileFragment;
         // not right now
 
@@ -219,7 +218,14 @@ public class PreviewImageFragment extends FileFragment {
                 mIgnoreFirstSavedState = false;
             }
         }
+        if (getFile() == null) {
+            throw new IllegalStateException("Instanced with a NULL OCFile");
+        }
+        if (!getFile().isDown()) {
+            throw new IllegalStateException("There is no local file to preview");
+        }
     }
+
 
     /**
      * {@inheritDoc}
@@ -230,16 +236,18 @@ public class PreviewImageFragment extends FileFragment {
         outState.putParcelable(PreviewImageFragment.EXTRA_FILE, getFile());
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
-        if (getFile() == null || !getFile().isDown()) {
-            showErrorMessage(R.string.preview_image_error_no_local_file);
-        } else {
+        if (getFile() != null) {
             mLoadBitmapTask = new LoadBitmapTask(mImageView);
+            //mLoadBitmapTask.execute(new String[]{getFile().getStoragePath()});
+//            mLoadBitmapTask.execute(getFile().getStoragePath());
             mLoadBitmapTask.execute(getFile());
         }
     }
+
 
     @Override
     public void onStop() {
@@ -549,7 +557,7 @@ public class PreviewImageFragment extends FileFragment {
             if (result.bitmap != null || result.drawable != null) {
                 showLoadedImage(result);
             } else {
-                showErrorMessage(mErrorMessageId);
+                showErrorMessage();
             }
             if (result.bitmap != null && mBitmap != result.bitmap) {
                 // unused bitmap, release it! (just in case)
@@ -624,11 +632,11 @@ public class PreviewImageFragment extends FileFragment {
             mImageView.setVisibility(View.VISIBLE);
 
         }
-    }
 
-    private void showErrorMessage(@StringRes int errorMessageId) {
-        mImageView.setBackgroundColor(Color.TRANSPARENT);
-        setMessageForMultiList(R.string.preview_sorry, errorMessageId, R.drawable.file_image);
+        private void showErrorMessage() {
+            mImageView.setBackgroundColor(Color.TRANSPARENT);
+            setMessageForMultiList(mErrorMessageId, R.string.preview_sorry, R.drawable.file_image);
+        }
     }
 
     private void setMultiListLoadingMessage() {
@@ -647,9 +655,9 @@ public class PreviewImageFragment extends FileFragment {
             mMultiListMessage.setText(message);
             mMultiListIcon.setImageResource(icon);
 
-            mMultiListMessage.setVisibility(View.VISIBLE);
             mMultiListIcon.setVisibility(View.VISIBLE);
             mMultiListProgress.setVisibility(View.GONE);
+
         }
     }
 

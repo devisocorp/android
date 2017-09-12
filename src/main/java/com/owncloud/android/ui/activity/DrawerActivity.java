@@ -5,17 +5,17 @@
  * Copyright (C) 2016 Andy Scherzinger
  * Copyright (C) 2016 Nextcloud
  * Copyright (C) 2016 ownCloud Inc.
- *
+ * <p>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,7 +39,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,30 +102,25 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
     private static final int MENU_ORDER_EXTERNAL_LINKS = 3;
     private static final int MENU_ITEM_EXTERNAL_LINK = 111;
     /**
-     * menu account avatar radius.
-     */
-    private float mMenuAccountAvatarRadiusDimension;
-
-    /**
-     * current account avatar radius.
-     */
-    private float mCurrentAccountAvatarRadiusDimension;
-
-    /**
-     * other accounts avatar radius.
-     */
-    private float mOtherAccountAvatarRadiusDimension;
-
-    /**
      * Reference to the drawer layout.
      */
     protected DrawerLayout mDrawerLayout;
-
     /**
      * Reference to the drawer toggle.
      */
     protected ActionBarDrawerToggle mDrawerToggle;
-
+    /**
+     * menu account avatar radius.
+     */
+    private float mMenuAccountAvatarRadiusDimension;
+    /**
+     * current account avatar radius.
+     */
+    private float mCurrentAccountAvatarRadiusDimension;
+    /**
+     * other accounts avatar radius.
+     */
+    private float mOtherAccountAvatarRadiusDimension;
     /**
      * Reference to the navigation view.
      */
@@ -368,6 +362,10 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
             navigationView.getMenu().removeItem(R.id.nav_logout);
         }
 
+        if (!getResources().getBoolean(R.bool.show_drawer_participate)) {
+            navigationView.getMenu().removeItem(R.id.nav_participate);
+        }
+
         if (AccountUtils.hasSearchSupport(account)) {
             if (!getResources().getBoolean(R.bool.recently_added_enabled)) {
                 navigationView.getMenu().removeItem(R.id.nav_recently_added);
@@ -474,7 +472,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
                 startActivityForResult(manageAccountsIntent, ACTION_MANAGE_ACCOUNTS);
                 break;
             case R.id.nav_recently_added:
-                switchToSearchFragment(new SearchEvent("%",SearchOperation.SearchType.CONTENT_TYPE_SEARCH,
+                switchToSearchFragment(new SearchEvent("%", SearchOperation.SearchType.CONTENT_TYPE_SEARCH,
                         SearchEvent.UnsetType.UNSET_BOTTOM_NAV_BAR), menuItem);
                 break;
             case R.id.nav_recently_modified:
@@ -535,7 +533,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         }
     }
 
-    private void externalLinkClicked(MenuItem menuItem){
+    private void externalLinkClicked(MenuItem menuItem) {
         for (ExternalLink link : externalLinksProvider.getExternalLink(ExternalLinkType.LINK)) {
             if (menuItem.getTitle().toString().equalsIgnoreCase(link.name)) {
                 Intent externalWebViewIntent = new Intent(getApplicationContext(),
@@ -619,7 +617,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
 
         ArrayList<Account> persistingAccounts = new ArrayList<>();
 
-        for (Account acc: accounts) {
+        for (Account acc : accounts) {
             boolean pendingForRemoval = arbitraryDataProvider.getBooleanValue(acc,
                     ManageAccountsActivity.PENDING_FOR_REMOVAL);
 
@@ -670,7 +668,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         mNavigationView.getMenu().removeGroup(R.id.drawer_menu_accounts);
 
         // add all accounts to list
-        for (Account account: accounts) {
+        for (Account account : accounts) {
             try {
                 // show all accounts except the currently active one and those pending for removal
 
@@ -718,7 +716,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         /// set home button properties
         if (mDrawerToggle != null && chosenFile != null) {
             mDrawerToggle.setDrawerIndicatorEnabled(isRoot(chosenFile));
-        } else if (mDrawerToggle != null){
+        } else if (mDrawerToggle != null) {
             mDrawerToggle.setDrawerIndicatorEnabled(false);
         }
     }
@@ -933,33 +931,14 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
         // set user space information
         Thread t = new Thread(new Runnable() {
             public void run() {
-                AccountManager mAccountMgr = AccountManager.get(MainApp.getAppContext());
 
-                String userId = mAccountMgr.getUserData(AccountUtils.getCurrentOwnCloudAccount(DrawerActivity.this),
-                        com.owncloud.android.lib.common.accounts.AccountUtils.Constants.KEY_USER_ID);
-
-                RemoteOperation getQuotaInfoOperation;
-                if (TextUtils.isEmpty(userId)) {
-                    getQuotaInfoOperation = new GetRemoteUserInfoOperation();
-                } else {
-                    getQuotaInfoOperation = new GetRemoteUserInfoOperation(userId);
-                }
-
+                RemoteOperation getQuotaInfoOperation = new GetRemoteUserInfoOperation();
                 RemoteOperationResult result = getQuotaInfoOperation.execute(
                         AccountUtils.getCurrentOwnCloudAccount(DrawerActivity.this), DrawerActivity.this);
 
                 if (result.isSuccess() && result.getData() != null) {
                     final UserInfo userInfo = (UserInfo) result.getData().get(0);
                     final Quota quota = userInfo.getQuota();
-
-                    // Since we always call this method, might as well put it here
-                    if (userInfo.getId() != null) {
-                        mAccountMgr.setUserData(
-                                AccountUtils.getCurrentOwnCloudAccount(DrawerActivity.this),
-                                com.owncloud.android.lib.common.accounts.AccountUtils.Constants.KEY_USER_ID,
-                                userInfo.getId()
-                        );
-                    }
 
                     if (quota != null) {
                         final long used = quota.getUsed();
@@ -1007,7 +986,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
 
             for (final ExternalLink link : externalLinksProvider.getExternalLink(ExternalLinkType.LINK)) {
 
-                int id=mNavigationView.getMenu().add(R.id.drawer_menu_external_links, MENU_ITEM_EXTERNAL_LINK,
+                int id = mNavigationView.getMenu().add(R.id.drawer_menu_external_links, MENU_ITEM_EXTERNAL_LINK,
                         MENU_ORDER_EXTERNAL_LINKS, link.name).setCheckable(true).getItemId();
 
                 MenuSimpleTarget target = new MenuSimpleTarget<Drawable>(id) {
@@ -1227,7 +1206,7 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
 
         ArrayList<Account> persistingAccounts = new ArrayList<>();
 
-        for (Account acc: accountsAll) {
+        for (Account acc : accountsAll) {
             boolean pendingForRemoval = arbitraryDataProvider.getBooleanValue(acc,
                     ManageAccountsActivity.PENDING_FOR_REMOVAL);
 

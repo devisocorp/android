@@ -33,7 +33,7 @@
     <string name="drawer_item_uploads_list">Subidas</string>
     <string name="drawer_item_activities">Actividades</string>
     <string name="drawer_item_notifications">Notificaciones</string>
-    <string name="drawer_quota">%1$s de %2$s utilizados</string>
+    <string name="drawer_quota">%1$s de %2$s utilizado</string>
 	<string name="drawer_close">Cerrar</string>
     <string name="drawer_open">Abrir</string>
     <string name="prefs_category_general">General</string>
@@ -62,7 +62,7 @@
 
     <string name="auth_check_server">Verificar servidor</string>
     <string name="auth_host_url">Dirección del servidor https://&#8230;</string>
-    <string name="auth_username">Usuario</string>
+    <string name="auth_username">Nombre de usuario</string>
     <string name="auth_password">Contraseña</string>
     <string name="auth_register">¿No tienes todavía un servidor?\Pulsa aquí para conseguir uno de un proveedor</string>
     <string name="sync_string_files">Archivos</string>
@@ -81,7 +81,7 @@
     <string name="uploader_error_message_source_file_not_found">No se encuentra el archivo seleccionado para subir. Por favor, comprueba que el archivo existe.</string>
     <string name="uploader_error_message_source_file_not_copied">No se ha podido copiar el archivo a una carpeta temporal. Intenta volver a enviarlo.</string>
     <string name="uploader_upload_files_behaviour">Opción de subida:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Mover el archivo a la carpeta de Nextcloud</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Mover el archivo a la carpeta de Cloudira</string>
     <string name="uploader_upload_files_behaviour_only_upload">Mantener el archivo en la carpeta original</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Borrar archivo de la carpeta original</string>
     <string name="file_list_seconds_ago">hace segundos</string>
@@ -341,10 +341,9 @@
     <string name="conflict_use_local_version">versión local</string>
     <string name="conflict_use_server_version">versión del servidor</string>
 
-    <string name="preview_sorry">¡Lo sentimos</string>
+    <string name="preview_sorry">¡Lo sentimos!</string>
     <string name="preview_image_description">Previsualización de imagen</string>
     <string name="preview_image_error_unknown_format">No se puede mostrar la imagen</string>
-    <string name="preview_image_error_no_local_file">No hay archivo local para previsualizar</string>
 
     <string name="error__upload__local_file_not_copied">%1$s no se ha podido copiar a la carpeta local %2$s</string>
     <string name="prefs_instant_upload_path_title">Carpeta para subida instantánea</string>
@@ -402,7 +401,7 @@
     <string name="file_migration_failed_not_enough_space">Error: Espacio insuficiente</string>
     <string name="file_migration_failed_not_writable">Error: No se puede escribir el archivo de destino</string>
     <string name="file_migration_failed_not_readable">Error: No se puede leer el archivo de origen</string>
-    <string name="file_migration_failed_dir_already_exists">Error: El directorio de Nextcloud ya existe</string>
+    <string name="file_migration_failed_dir_already_exists">Error: El directorio de Cloudira ya existe</string>
     <string name="file_migration_failed_while_coping">Error: Fallo durante la migración</string>
     <string name="file_migration_failed_while_updating_index">Error: Fallo al actualizar el índice</string>
 
@@ -543,7 +542,7 @@
 
     <string name="uploads_view_upload_status_waiting_for_charging">Esperando la carga del dispositivo</string>
     <string name="actionbar_search">Buscar</string>
-    <string name="files_drop_not_supported">Esta es una característica de Nextcloud. Por favor, actualice.</string>
+    <string name="files_drop_not_supported">Esta es una característica de Cloudira. Por favor, actualice.</string>
     <string name="learn_more">Aprender más</string>
     <string name="drawer_synced_folders">Carga automática</string>
     <string name="drawer_participate">Participar</string>
@@ -681,8 +680,5 @@
     <string name="whats_new_fingerprint_content">Usa tu lector de huellas para desbloquear la app</string>
     <string name="fallback_weblogin_back">VOLVER</string>
     <string name="fallback_weblogin_text">Volver al método de registro antiguo</string>
-
-    <string name="foreground_service_upload">Subiendo archivos &#8230;</string>
-    <string name="foreground_service_download">Descargando archivos &#8230;</string>
 
     </resources>

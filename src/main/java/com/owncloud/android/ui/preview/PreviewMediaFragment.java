@@ -288,10 +288,10 @@ public class PreviewMediaFragment extends FileFragment implements
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     mImagePreview.setImageBitmap(bitmap); //associated cover art in bitmap
                 } else {
-                    mImagePreview.setImageResource(R.drawable.logo);
+                    mImagePreview.setImageResource(R.drawable.cloudira_logo);
                 }
             } catch (Throwable t) {
-                mImagePreview.setImageResource(R.drawable.logo);
+                mImagePreview.setImageResource(R.drawable.cloudira_logo);
             }
         }
     }

@@ -67,7 +67,7 @@
     <string name="uploader_error_message_no_file_to_upload">Отримані дані не містили вірного файлу.</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s не дозволено читати отриманий файл</string>
     <string name="uploader_upload_files_behaviour">Параметри завантаження:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Перемістити до каталогу Nextcloud</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Перемістити до каталогу Cloudira</string>
     <string name="uploader_upload_files_behaviour_only_upload">Залишити файл у вихідному каталозі</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Видалити файл з вихідного каталогу</string>
     <string name="file_list_seconds_ago">секунди тому</string>

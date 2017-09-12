@@ -1,4 +1,4 @@
-/*
+/**
  * ownCloud Android client application
  *
  * @author Bartek Przybylski
@@ -8,34 +8,33 @@
  * Copyright (C) 2012  Bartek Przybylski
  * Copyright (C) 2015 ownCloud Inc.
  * Copyright (C) 2017 Mario Danic
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,
  * as published by the Free Software Foundation.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * <p>
  * All changes by Mario Danic are distributed under the following terms:
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 package com.owncloud.android.authentication;
@@ -53,14 +52,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -69,15 +65,12 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.AndroidRuntimeException;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -85,8 +78,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -103,7 +94,6 @@ import com.owncloud.android.lib.common.accounts.AccountTypeUtils;
 import com.owncloud.android.lib.common.accounts.AccountUtils.AccountNotFoundException;
 import com.owncloud.android.lib.common.accounts.AccountUtils.Constants;
 import com.owncloud.android.lib.common.network.CertificateCombinedException;
-import com.owncloud.android.lib.common.network.NetworkUtils;
 import com.owncloud.android.lib.common.operations.OnRemoteOperationListener;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -125,9 +115,7 @@ import com.owncloud.android.ui.dialog.SslUntrustedCertDialog.OnSslUntrustedCertL
 import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.DisplayUtils;
 
-import java.net.URLDecoder;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
 import java.util.Map;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -140,15 +128,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         SsoWebViewClientListener, OnSslUntrustedCertListener,
         AuthenticatorAsyncTask.OnAuthenticatorTaskListener {
 
-    private static final String TAG = AuthenticatorActivity.class.getSimpleName();
-
-    private static final String SCREEN_NAME = "Login";
-
     public static final String EXTRA_ACTION = "ACTION";
     public static final String EXTRA_ACCOUNT = "ACCOUNT";
-
+    public static final byte ACTION_CREATE = 0;
+    public static final byte ACTION_UPDATE_TOKEN = 1;               // requested by the user
+    public static final byte ACTION_UPDATE_EXPIRED_TOKEN = 2;       // detected by the app
+    public static final String PROTOCOL_SUFFIX = "://";
+    public static final String LOGIN_URL_DATA_KEY_VALUE_SEPARATOR = ":";
+    public static final String HTTPS_PROTOCOL = "https://";
+    public static final String HTTP_PROTOCOL = "http://";
+    public static final String REGULAR_SERVER_INPUT_TYPE = "regular";
+    public static final String SUBDOMAIN_SERVER_INPUT_TYPE = "prefix";
+    public static final String DIRECTORY_SERVER_INPUT_TYPE = "suffix";
+    private static final String TAG = AuthenticatorActivity.class.getSimpleName();
+    private static final String SCREEN_NAME = "Login";
     private static final String KEY_AUTH_TOKEN_TYPE = "AUTH_TOKEN_TYPE";
-
     private static final String KEY_HOST_URL_TEXT = "HOST_URL_TEXT";
     private static final String KEY_OC_VERSION = "OC_VERSION";
     private static final String KEY_SERVER_VALID = "SERVER_VALID";
@@ -162,62 +156,39 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private static final String KEY_SERVER_AUTH_METHOD = "SERVER_AUTH_METHOD";
     private static final String KEY_WAITING_FOR_OP_ID = "WAITING_FOR_OP_ID";
     private static final String KEY_AUTH_TOKEN = "AUTH_TOKEN";
-
     private static final String AUTH_ON = "on";
     private static final String AUTH_OPTIONAL = "optional";
-
-    public static final byte ACTION_CREATE = 0;
-    public static final byte ACTION_UPDATE_TOKEN = 1;               // requested by the user
-    public static final byte ACTION_UPDATE_EXPIRED_TOKEN = 2;       // detected by the app
-
     private static final String UNTRUSTED_CERT_DIALOG_TAG = "UNTRUSTED_CERT_DIALOG";
     private static final String SAML_DIALOG_TAG = "SAML_DIALOG";
     private static final String WAIT_DIALOG_TAG = "WAIT_DIALOG";
     private static final String CREDENTIALS_DIALOG_TAG = "CREDENTIALS_DIALOG";
     private static final String KEY_AUTH_IS_FIRST_ATTEMPT_TAG = "KEY_AUTH_IS_FIRST_ATTEMPT";
-
     private static final String KEY_USERNAME = "USERNAME";
     private static final String KEY_PASSWORD = "PASSWORD";
     private static final String KEY_ASYNC_TASK_IN_PROGRESS = "AUTH_IN_PROGRESS";
-    private static final String WEB_LOGIN = "/index.php/login/flow";
-    public static final String PROTOCOL_SUFFIX = "://";
-    public static final String LOGIN_URL_DATA_KEY_VALUE_SEPARATOR = ":";
-    public static final String HTTPS_PROTOCOL = "https://";
-    public static final String HTTP_PROTOCOL = "http://";
-
-    public static final String REGULAR_SERVER_INPUT_TYPE = "regular";
-    public static final String SUBDOMAIN_SERVER_INPUT_TYPE = "prefix";
-    public static final String DIRECTORY_SERVER_INPUT_TYPE = "suffix";
-
+    /// activity-level references / state
+    private final Handler mHandler = new Handler();
+    private final String BASIC_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypePass(MainApp.getAccountType());
+    private final String OAUTH_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType());
+    private final String SAML_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType());
     /// parameters from EXTRAs in starter Intent
     private byte mAction;
     private Account mAccount;
     private String mAuthTokenType;
-
-
-    /// activity-level references / state
-    private final Handler mHandler = new Handler();
     private ServiceConnection mOperationsServiceConnection = null;
     private OperationsServiceBinder mOperationsServiceBinder = null;
     private AccountManager mAccountMgr;
     private Uri mNewCapturedUriFromOAuth2Redirection;
-
-
-    /// Server PRE-Fragment elements 
+    /// Server PRE-Fragment elements
     private CustomEditText mHostUrlInput;
     private View mRefreshButton;
     private TextView mServerStatusView;
-
     private TextWatcher mHostUrlInputWatcher;
     private int mServerStatusText = 0, mServerStatusIcon = 0;
-
     private boolean mServerIsChecked = false;
     private boolean mServerIsValid = false;
-
     private GetServerInfoOperation.ServerInfo mServerInfo = new GetServerInfoOperation.ServerInfo();
-
-
-    /// Authentication PRE-Fragment elements 
+    /// Authentication PRE-Fragment elements
     private CheckBox mOAuth2Check;
     private TextView mOAuthAuthEndpointText;
     private TextView mOAuthTokenEndpointText;
@@ -225,43 +196,67 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private EditText mPasswordInput;
     private View mOkButton;
     private TextView mAuthStatusView;
-    private ImageButton mTestServerButton;
-
     private WebView mLoginWebView;
-
     private int mAuthStatusText = 0, mAuthStatusIcon = 0;
-
     private String mAuthToken = "";
     private AuthenticatorAsyncTask mAsyncTask;
-
     private boolean mIsFirstAuthAttempt;
-
-    /// Identifier of operation in progress which result shouldn't be lost 
+    /// Identifier of operation in progress which result shouldn't be lost
     private long mWaitingForOpId = Long.MAX_VALUE;
-
-    private final String BASIC_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypePass(MainApp.getAccountType());
-    private final String OAUTH_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType());
-    private final String SAML_TOKEN_TYPE = AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType());
-
     private boolean webViewLoginMethod;
     private String webViewUser;
     private String webViewPassword;
-    private TextInputLayout mUsernameInputLayout;
-    private TextInputLayout mPasswordInputLayout;
-    private boolean forceOldLoginMethod = false;
+
+    /**
+     * parses a URI string and returns a login data object with the information from the URI string.
+     *
+     * @param prefix     URI beginning, e.g. cloud://login/
+     * @param dataString the complete URI
+     * @return login data
+     * @throws IllegalArgumentException when
+     */
+    public static LoginUrlInfo parseLoginDataUrl(String prefix, String dataString) throws IllegalArgumentException {
+        if (dataString.length() < prefix.length()) {
+            throw new IllegalArgumentException("Invalid login URL detected");
+        }
+        LoginUrlInfo loginUrlInfo = new LoginUrlInfo();
+
+        // format is basically xxx://login/server:xxx&user:xxx&password while all variables are optional
+        String data = dataString.substring(prefix.length());
+
+        // parse data
+        String[] values = data.split("&");
+
+        if (values.length < 1 || values.length > 3) {
+            // error illegal number of URL elements detected
+            throw new IllegalArgumentException("Illegal number of login URL elements detected: " + values.length);
+        }
+
+        for (String value : values) {
+            if (value.startsWith("user" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
+                loginUrlInfo.username = value.substring(("user" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length());
+            } else if (value.startsWith("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
+                loginUrlInfo.password = value.substring(("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length());
+            } else if (value.startsWith("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
+                loginUrlInfo.serverAddress = value.substring(("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length());
+            } else {
+                // error illegal URL element detected
+                throw new IllegalArgumentException("Illegal magic login URL element detected: " + value);
+            }
+        }
+
+        return loginUrlInfo;
+    }
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * IMPORTANT ENTRY POINT 1: activity is shown to the user
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Log_OC.e(TAG,  "onCreate init");
         super.onCreate(savedInstanceState);
-
-        // delete cookies for webView
-        deleteCookies();
 
         // Workaround, for fixing a problem with Android Library Suppor v7 19
         //getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -303,6 +298,15 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             /// initialize general UI elements
             initOverallUi();
 
+            mOkButton = findViewById(R.id.buttonOK);
+            mOkButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onOkClick();
+                }
+            });
+
             findViewById(R.id.centeredRefreshButton).setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -327,52 +331,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         } else {
             setContentView(R.layout.account_setup_webview);
             mLoginWebView = (WebView) findViewById(R.id.login_webview);
-            initWebViewLogin(null);
+            initWebViewLogin();
         }
 
         initServerPreFragment(savedInstanceState);
     }
 
-    private void deleteCookies() {
-        try {
-            CookieSyncManager.createInstance(this);
-            CookieManager cookieManager = CookieManager.getInstance();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cookieManager.removeAllCookies(null);
-            } else {
-                cookieManager.removeAllCookie();
-            }
-        } catch (AndroidRuntimeException e) {
-            Log_OC.e(TAG, e.getMessage());
-        }
-    }
-
-    private static String getWebLoginUserAgent() {
-        return Build.MANUFACTURER.substring(0, 1).toUpperCase() +
-                Build.MANUFACTURER.substring(1).toLowerCase() + " " + Build.MODEL;
-    }
-
-    private void initWebViewLogin(String baseURL) {
-        mLoginWebView.setVisibility(View.GONE);
-
-        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.login_webview_progress_bar);
-
+    private void initWebViewLogin() {
         mLoginWebView.getSettings().setAllowFileAccess(false);
         mLoginWebView.getSettings().setJavaScriptEnabled(true);
-        mLoginWebView.getSettings().setDomStorageEnabled(true);
-        mLoginWebView.getSettings().setUserAgentString(getWebLoginUserAgent());
-        mLoginWebView.getSettings().setSaveFormData(false);
-        mLoginWebView.getSettings().setSavePassword(false);
-
-        if (baseURL != null && !baseURL.isEmpty()){
-            Map<String, String> headers = new HashMap<>();
-            headers.put(RemoteOperation.OCS_API_HEADER, RemoteOperation.OCS_API_HEADER_VALUE);
-            mLoginWebView.loadUrl(baseURL + WEB_LOGIN, headers);
-        } else {
-            mLoginWebView.loadUrl(getResources().getString(R.string.webview_login_url));
-        }
-
+        mLoginWebView.getSettings().setUserAgentString(MainApp.getUserAgent());
+        mLoginWebView.loadUrl(getResources().getString(R.string.webview_login_url));
         mLoginWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -383,65 +352,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 return false;
             }
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                progressBar.setVisibility(View.GONE);
-                mLoginWebView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                X509Certificate cert = SsoWebViewClient.getX509CertificateFromError(error);
-
-                try {
-                    if (cert != null && NetworkUtils.isCertInKnownServersStore(cert, getApplicationContext())) {
-                        handler.proceed();
-                    } else {
-                        showUntrustedCertDialog(cert, error, handler);
-                    }
-                } catch (Exception e) {
-                    Log_OC.e(TAG, "Cert could not be verified");
-                }
-            }
-
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                progressBar.setVisibility(View.GONE);
-                mLoginWebView.setVisibility(View.VISIBLE);
-                mLoginWebView.loadData(DisplayUtils.getData(getResources().openRawResource(R.raw.custom_error)),"text/html; charset=UTF-8", null);
+
+                mLoginWebView.loadData(DisplayUtils.getData(getResources().openRawResource(R.raw.custom_error)), "text/html; charset=UTF-8", null);
             }
         });
-
-        // show snackbar after 60s to switch back to old login method
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(mLoginWebView, R.string.fallback_weblogin_text, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.fallback_weblogin_back, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mLoginWebView.setVisibility(View.INVISIBLE);
-
-                                setContentView(R.layout.account_setup);
-
-                                // initialize general UI elements
-                                initOverallUi();
-
-                                mHostUrlInput.setText(baseURL);
-                                mPasswordInputLayout.setVisibility(View.VISIBLE);
-                                mUsernameInput.requestFocus();
-                                mOAuth2Check.setVisibility(View.INVISIBLE);
-                                mAuthStatusView.setVisibility(View.INVISIBLE);
-                                mServerStatusView.setVisibility(View.INVISIBLE);
-                                mTestServerButton.setVisibility(View.INVISIBLE);
-                                forceOldLoginMethod = true;
-
-                                checkOcServer();
-                            }
-                        }).show();
-            }
-        }, 60000);
     }
 
     private void parseAndLoginFromWebView(String dataString) {
@@ -473,50 +388,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 }
             }
         }
-    }
-
-    /**
-     * parses a URI string and returns a login data object with the information from the URI string.
-     *
-     * @param prefix     URI beginning, e.g. cloud://login/
-     * @param dataString the complete URI
-     * @return login data
-     * @throws IllegalArgumentException when
-     */
-    public static LoginUrlInfo parseLoginDataUrl(String prefix, String dataString) throws IllegalArgumentException {
-        if (dataString.length() < prefix.length()) {
-            throw new IllegalArgumentException("Invalid login URL detected");
-        }
-        LoginUrlInfo loginUrlInfo = new LoginUrlInfo();
-
-        // format is basically xxx://login/server:xxx&user:xxx&password while all variables are optional
-        String data = dataString.substring(prefix.length());
-
-        // parse data
-        String[] values = data.split("&");
-
-        if (values.length < 1 || values.length > 3) {
-            // error illegal number of URL elements detected
-            throw new IllegalArgumentException("Illegal number of login URL elements detected: " + values.length);
-        }
-
-        for (String value : values) {
-            if (value.startsWith("user" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
-                loginUrlInfo.username = URLDecoder.decode(
-                        value.substring(("user" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
-            } else if (value.startsWith("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
-                loginUrlInfo.password = URLDecoder.decode(
-                        value.substring(("password" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
-            } else if (value.startsWith("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR)) {
-                loginUrlInfo.serverAddress = URLDecoder.decode(
-                        value.substring(("server" + LOGIN_URL_DATA_KEY_VALUE_SEPARATOR).length()));
-            } else {
-                // error illegal URL element detected
-                throw new IllegalArgumentException("Illegal magic login URL element detected: " + value);
-            }
-        }
-
-        return loginUrlInfo;
     }
 
     private void initAuthTokenType() {
@@ -553,18 +424,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * Configures elements in the user interface under direct control of the Activity.
      */
     private void initOverallUi() {
-        mHostUrlInput = (CustomEditText) findViewById(R.id.hostUrlInput);
-        mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_layout_account_username);
-        mPasswordInputLayout = (TextInputLayout) findViewById(R.id.input_layout_account_password);
-        mPasswordInput = (EditText) findViewById(R.id.account_password);
-        mUsernameInput = (EditText) findViewById(R.id.account_username);
-        mAuthStatusView = (TextView) findViewById(R.id.auth_status_text);
-        mOAuth2Check = (CheckBox) findViewById(R.id.oauth_onOff_check);
-        mServerStatusView = (TextView) findViewById(R.id.server_status_text);
-        mTestServerButton = (ImageButton) findViewById(R.id.testServerButton);
-
-        mOkButton = findViewById(R.id.buttonOK);
-        mOkButton.setOnClickListener(v -> onOkClick());
 
         /// step 1 - load and process relevant inputs (resources, intent, savedInstanceState)
         boolean isWelcomeLinkVisible = getResources().getBoolean(R.bool.show_welcome_link);
@@ -586,7 +445,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         /// step 2 - set properties of UI elements (text, visibility, enabled...)
         Button welcomeLink = (Button) findViewById(R.id.welcome_link);
         welcomeLink.setVisibility(isWelcomeLinkVisible ? View.VISIBLE : View.GONE);
-        welcomeLink.setText(getString(R.string.auth_register));
+        String authRegister = getString(R.string.auth_register);
+        String appName = getString(R.string.app_name);
+        welcomeLink.setText(String.format(authRegister));
 
         TextView instructionsView = (TextView) findViewById(R.id.instructions_message);
         if (instructionsMessageText != null) {
@@ -595,10 +456,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         } else {
             instructionsView.setVisibility(View.GONE);
         }
-    }
-
-    public void onTestServerConnectionClick(View v) {
-        checkOcServer();
     }
 
 
@@ -646,7 +503,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             /// step 2 - set properties of UI elements (text, visibility, enabled...)
             mHostUrlInput = (CustomEditText) findViewById(R.id.hostUrlInput);
             // Convert IDN to Unicode
-            mHostUrlInput.setText(DisplayUtils.convertIdn(mServerInfo.mBaseUrl, false));
+//            mHostUrlInput.setText(DisplayUtils.convertIdn(mServerInfo.mBaseUrl, false));
+            mHostUrlInput.setText(DisplayUtils.convertIdn(getString(R.string.cloudira_base_url), false));
             if (mAction != ACTION_CREATE) {
                 /// lock things that should not change
                 mHostUrlInput.setEnabled(false);
@@ -823,11 +681,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Saves relevant state before {@link #onPause()}
-     *
+     * <p>
      * Do NOT save {@link #mNewCapturedUriFromOAuth2Redirection}; it keeps a temporal flag,
      * intended to defer the processing of the redirection caught in
      * {@link #onNewIntent(Intent)} until {@link #onResume()}
-     *
+     * <p>
      * See {@link super#onSaveInstanceState(Bundle)}
      */
     @Override
@@ -907,7 +765,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     /**
      * The redirection triggered by the OAuth authentication server as response to the
      * GET AUTHORIZATION request is caught here.
-     *
+     * <p>
      * To make this possible, this activity needs to be qualified with android:launchMode =
      * "singleTask" in the AndroidManifest.xml file.
      */
@@ -1052,11 +910,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Handles changes in focus on the text input for the server URL.
-     *
+     * <p>
      * IMPORTANT ENTRY POINT 2: When (!hasFocus), user wrote the server URL and changed to
      * other field. The operation to check the existence of the server in the entered URL is
      * started.
-     *
+     * <p>
      * When hasFocus:    user 'comes back' to write again the server URL.
      */
     private void onUrlInputFocusLost() {
@@ -1105,7 +963,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
             Intent getServerInfoIntent = new Intent();
             getServerInfoIntent.setAction(OperationsService.ACTION_GET_SERVER_INFO);
-            getServerInfoIntent.putExtra(OperationsService.EXTRA_SERVER_URL, normalizeUrlSuffix(uri));
+            getServerInfoIntent.putExtra(
+                    OperationsService.EXTRA_SERVER_URL,
+                    normalizeUrlSuffix(uri)
+            );
 
             if (mOperationsServiceBinder != null) {
                 mWaitingForOpId = mOperationsServiceBinder.queueNewOperation(getServerInfoIntent);
@@ -1125,9 +986,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Handles changes in focus on the text input for the password (basic authorization).
-     *
+     * <p>
      * When (hasFocus), the button to toggle password visibility is shown.
-     *
+     * <p>
      * When (!hasFocus), the button is made invisible and the password is hidden.
      *
      * @param hasFocus 'True' if focus is received, 'false' if is lost
@@ -1181,13 +1042,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     /**
      * Checks the credentials of the user in the root of the ownCloud server
      * before creating a new local account.
-     *
+     * <p>
      * For basic authorization, a check of existence of the root folder is
      * performed.
-     *
+     * <p>
      * For OAuth, starts the flow to get an access token; the credentials test
      * is postponed until it is available.
-     *
+     * <p>
      * IMPORTANT ENTRY POINT 4
      */
     public void onOkClick() {
@@ -1203,10 +1064,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             return;
         }
 
-        if (AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType()).equals(mAuthTokenType)) {
+        if (AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType()).
+                equals(mAuthTokenType)) {
+
             startOauthorization();
-        } else if (AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType())
-                .equals(mAuthTokenType)) {
+        } else if (AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType()).
+                equals(mAuthTokenType)) {
 
             startSamlBasedFederatedSingleSignOnAuthorization();
         } else {
@@ -1238,7 +1101,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         dialog.show(getSupportFragmentManager(), WAIT_DIALOG_TAG);
 
         /// validate credentials accessing the root folder
-        OwnCloudCredentials credentials = OwnCloudCredentialsFactory.newBasicCredentials(username, password);
+        OwnCloudCredentials credentials = OwnCloudCredentialsFactory.newBasicCredentials(username,
+                password);
         accessRootFolder(credentials);
     }
 
@@ -1300,7 +1164,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Callback method invoked when a RemoteOperation executed by this Activity finishes.
-     *
+     * <p>
      * Dispatches the operation flow to the right method.
      */
     @Override
@@ -1309,7 +1173,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (operation instanceof GetServerInfoOperation) {
             if (operation.hashCode() == mWaitingForOpId) {
                 onGetServerInfoFinish(result);
-            }   // else nothing ; only the last check operation is considered; 
+            }   // else nothing ; only the last check operation is considered;
             // multiple can be started if the user amends a URL quickly
 
         } else if (operation instanceof OAuth2GetAccessToken) {
@@ -1395,28 +1259,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             //      1. connection succeeded, and we know if it's SSL or not
             //      2. server is installed
             //      3. we got the server version
-            //      4. we got the authentication method required by the server 
+            //      4. we got the authentication method required by the server
             mServerInfo = (GetServerInfoOperation.ServerInfo) (result.getData().get(0));
 
-            webViewLoginMethod = mServerInfo.mVersion.isWebLoginSupported() && !forceOldLoginMethod;
-
-            if (webViewUser != null && !webViewUser.isEmpty() &&
-                    webViewPassword != null && !webViewPassword.isEmpty()) {
+            if (webViewLoginMethod) {
                 checkBasicAuthorization(webViewUser, webViewPassword);
-            } else if (webViewLoginMethod) {
-                // hide old login
-                mOkButton.setVisibility(View.GONE);
-                mUsernameInputLayout.setVisibility(View.GONE);
-                mPasswordInputLayout.setVisibility(View.GONE);
-
-                setContentView(R.layout.account_setup_webview);
-                mLoginWebView = (WebView) findViewById(R.id.login_webview);
-                initWebViewLogin(mServerInfo.mBaseUrl);
-            } else {
-                // show old login
-                mOkButton.setVisibility(View.VISIBLE);
-                mUsernameInputLayout.setVisibility(View.VISIBLE);
-                mPasswordInputLayout.setVisibility(View.VISIBLE);
             }
 
             if (!authSupported(mServerInfo.mAuthMethod)) {
@@ -1441,14 +1288,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             showServerStatus();
             mOkButton.setEnabled(mServerIsValid);
         }
-
-        if (!mServerIsValid) {
-            // hide old login
-            mOkButton.setVisibility(View.GONE);
-            mUsernameInputLayout.setVisibility(View.GONE);
-            mPasswordInputLayout.setVisibility(View.GONE);
-        }
-
 
         /// very special case (TODO: move to a common place for all the remote operations)
         if (result.getCode() == ResultCode.SSL_RECOVERABLE_PEER_UNVERIFIED) {
@@ -1597,7 +1436,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             default:
                 mServerStatusText = 0;
                 mServerStatusIcon = 0;
-                break;
         }
     }
 
@@ -1684,7 +1522,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
-    private void updateStatusIconFailUserName(int failedStatusText){
+    private void updateStatusIconFailUserName(int failedStatusText) {
         mAuthStatusIcon = R.drawable.ic_alert;
         mAuthStatusText = failedStatusText;
     }
@@ -1731,7 +1569,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Processes the result of the access check performed to try the user credentials.
-     *
+     * <p>
      * Creates a new account through the AccountManager.
      *
      * @param result Result of the operation.
@@ -1763,30 +1601,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 }
             }
 
-            // Reset webView
-            webViewPassword = null;
-            webViewUser = null;
-            deleteCookies();
-
             if (success) {
                 finish();
-            } else {
-                // init webView again
-                mLoginWebView.setVisibility(View.GONE);
-                setContentView(R.layout.account_setup);
-
-                CustomEditText serverAddressField = (CustomEditText) findViewById(R.id.hostUrlInput);
-                serverAddressField.setText(mServerInfo.mBaseUrl);
-
-                findViewById(R.id.oauth_onOff_check).setVisibility(View.GONE);
-                findViewById(R.id.server_status_text).setVisibility(View.GONE);
-                mAuthStatusView = (TextView) findViewById(R.id.auth_status_text);
-
-                showAuthStatus();
             }
 
         } else if (result.isServerFail() || result.isException()) {
-            /// server errors or exceptions in authorization take to requiring a new check of 
+            /// server errors or exceptions in authorization take to requiring a new check of
             /// the server
             mServerIsChecked = true;
             mServerIsValid = false;
@@ -1811,21 +1631,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
         } else {    // authorization fail due to client side - probably wrong credentials
-            if (webViewLoginMethod) {
-                mLoginWebView = (WebView) findViewById(R.id.login_webview);
-                initWebViewLogin(mServerInfo.mBaseUrl);
-
-                Snackbar.make(mLoginWebView, getString(R.string.auth_access_failed) + ": " + result.getLogMessage(),
-                        Snackbar.LENGTH_LONG).show();
-            } else {
+            if (!webViewLoginMethod) {
                 updateAuthStatusIconAndText(result);
                 showAuthStatus();
             }
-            // reset webview
-            webViewPassword = null;
-            webViewUser = null;
-            deleteCookies();
-
             Log_OC.d(TAG, "Access failed: " + result.getLogMessage());
         }
     }
@@ -1833,10 +1642,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Updates the authentication token.
-     *
+     * <p>
      * Sets the proper response so that the AccountAuthenticator that started this activity
      * saves a new authorization token for mAccount.
-     *
+     * <p>
      * Kills the session kept by OwnCloudClientManager so that a new one will created with
      * the new credentials when needed.
      */
@@ -1850,7 +1659,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (AccountTypeUtils.getAuthTokenTypeAccessToken(MainApp.getAccountType()).
                 equals(mAuthTokenType)) {
             response.putString(AccountManager.KEY_AUTHTOKEN, mAuthToken);
-            // the next line is necessary, notifications are calling directly to the 
+            // the next line is necessary, notifications are calling directly to the
             // AuthenticatorActivity to update, without AccountManager intervention
             mAccountMgr.setAuthToken(mAccount, mAuthTokenType, mAuthToken);
 
@@ -1858,7 +1667,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 equals(mAuthTokenType)) {
 
             response.putString(AccountManager.KEY_AUTHTOKEN, mAuthToken);
-            // the next line is necessary; by now, notifications are calling directly to the 
+            // the next line is necessary; by now, notifications are calling directly to the
             // AuthenticatorActivity to update, without AccountManager intervention
             mAccountMgr.setAuthToken(mAccount, mAuthTokenType, mAuthToken);
 
@@ -1886,9 +1695,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Creates a new account through the Account Authenticator that started this activity.
-     *
+     * <p>
      * This makes the account permanent.
-     *
+     * <p>
      * TODO Decide how to name the OAuth accounts
      */
     @SuppressFBWarnings("DMI")
@@ -1914,17 +1723,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (isOAuth) {
             username = "OAuth_user" + (new java.util.Random(System.currentTimeMillis())).nextLong();
         }
-
         String accountName = com.owncloud.android.lib.common.accounts.AccountUtils.
                 buildAccountName(uri, username);
         Account newAccount = new Account(accountName, MainApp.getAccountType());
         if (AccountUtils.exists(newAccount, getApplicationContext())) {
             // fail - not a new account, but an existing one; disallow
             RemoteOperationResult result = new RemoteOperationResult(ResultCode.ACCOUNT_NOT_NEW);
-
-            updateAuthStatusIconAndText(result);
-            showAuthStatus();
-
+            if (!webViewLoginMethod) {
+                updateAuthStatusIconAndText(result);
+                showAuthStatus();
+            }
             Log_OC.d(TAG, result.getLogMessage());
             return false;
 
@@ -1963,7 +1771,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
             /// prepare result to return to the Authenticator
-            //  TODO check again what the Authenticator makes with it; probably has the same 
+            //  TODO check again what the Authenticator makes with it; probably has the same
             //  effect as addAccountExplicitly, but it's not well done
             final Intent intent = new Intent();
             intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, MainApp.getAccountType());
@@ -1972,7 +1780,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             if (isOAuth || isSaml) {
                 mAccountMgr.setAuthToken(mAccount, mAuthTokenType, mAuthToken);
             }
-            /// add user data to the new account; TODO probably can be done in the last parameter 
+            /// add user data to the new account; TODO probably can be done in the last parameter
             //      addAccountExplicitly, or in KEY_USERDATA
             mAccountMgr.setUserData(
                     mAccount, Constants.KEY_OC_VERSION, mServerInfo.mVersion.getVersion()
@@ -1980,16 +1788,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mAccountMgr.setUserData(
                     mAccount, Constants.KEY_OC_BASE_URL, mServerInfo.mBaseUrl
             );
-
             if (authResult.getData() != null) {
                 try {
                     UserInfo userInfo = (UserInfo) authResult.getData().get(0);
                     mAccountMgr.setUserData(
                             mAccount, Constants.KEY_DISPLAY_NAME, userInfo.getDisplayName()
-                    );
-
-                    mAccountMgr.setUserData(
-                            mAccount, Constants.KEY_USER_ID, userInfo.getId()
                     );
                 } catch (ClassCastException c) {
                     Log_OC.w(TAG, "Couldn't get display name for " + username);
@@ -2031,12 +1834,15 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * to the last check on the ownCloud server.
      */
     private void showServerStatus() {
-        if (mServerStatusIcon == 0 && mServerStatusText == 0 || forceOldLoginMethod) {
-            mServerStatusView.setVisibility(View.INVISIBLE);
-        } else {
-            mServerStatusView.setText(mServerStatusText);
-            mServerStatusView.setCompoundDrawablesWithIntrinsicBounds(mServerStatusIcon, 0, 0, 0);
-            mServerStatusView.setVisibility(View.VISIBLE);
+        if (!webViewLoginMethod) {
+            if (mServerStatusIcon == 0 && mServerStatusText == 0) {
+                mServerStatusView.setVisibility(View.INVISIBLE);
+
+            } else {
+                mServerStatusView.setText(mServerStatusText);
+                mServerStatusView.setCompoundDrawablesWithIntrinsicBounds(mServerStatusIcon, 0, 0, 0);
+                mServerStatusView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -2046,12 +1852,15 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * to the interactions with the OAuth authorization server.
      */
     private void showAuthStatus() {
-        if (mAuthStatusIcon == 0 && mAuthStatusText == 0) {
-            mAuthStatusView.setVisibility(View.INVISIBLE);
-        } else {
-            mAuthStatusView.setText(mAuthStatusText);
-            mAuthStatusView.setCompoundDrawablesWithIntrinsicBounds(mAuthStatusIcon, 0, 0, 0);
-            mAuthStatusView.setVisibility(View.VISIBLE);
+        if (!webViewLoginMethod) {
+            if (mAuthStatusIcon == 0 && mAuthStatusText == 0) {
+                mAuthStatusView.setVisibility(View.INVISIBLE);
+
+            } else {
+                mAuthStatusView.setText(mAuthStatusText);
+                mAuthStatusView.setCompoundDrawablesWithIntrinsicBounds(mAuthStatusIcon, 0, 0, 0);
+                mAuthStatusView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -2068,7 +1877,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Called when the eye icon in the password field is clicked.
-     *
+     * <p>
      * Toggles the visibility of the password in the field.
      */
     public void onViewPasswordClick() {
@@ -2085,7 +1894,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Called when the checkbox for OAuth authorization is clicked.
-     *
+     * <p>
      * Hides or shows the input fields for user & password.
      *
      * @param view 'View password' 'button'
@@ -2103,7 +1912,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     /**
      * Called when the 'action' button in an IME is pressed ('enter' in software keyboard).
-     *
+     * <p>
      * Used to trigger the authentication check when the user presses 'enter' after writing the
      * password, or to throw the server test when the only field on screen is the URL input field.
      */
@@ -2116,12 +1925,172 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
         } else if (actionId == EditorInfo.IME_ACTION_NEXT && inputField != null &&
-                inputField.equals(mHostUrlInput)) {
+                inputField.equals(mHostUrlInput) &&
+                AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType()).
+                        equals(mAuthTokenType)) {
             checkOcServer();
         }
         return false;   // always return false to grant that the software keyboard is hidden anyway
     }
 
+    private void getRemoteUserNameOperation(String sessionCookie) {
+
+        Intent getUserNameIntent = new Intent();
+        getUserNameIntent.setAction(OperationsService.ACTION_GET_USER_NAME);
+        getUserNameIntent.putExtra(OperationsService.EXTRA_SERVER_URL, mServerInfo.mBaseUrl);
+        getUserNameIntent.putExtra(OperationsService.EXTRA_COOKIE, sessionCookie);
+
+        if (mOperationsServiceBinder != null) {
+            mWaitingForOpId = mOperationsServiceBinder.queueNewOperation(getUserNameIntent);
+        }
+    }
+
+    @Override
+    public void onSsoFinished(String sessionCookie) {
+        if (sessionCookie != null && sessionCookie.length() > 0) {
+            Log_OC.d(TAG, "Successful SSO - time to save the account");
+            mAuthToken = sessionCookie;
+            getRemoteUserNameOperation(sessionCookie);
+            Fragment fd = getSupportFragmentManager().findFragmentByTag(SAML_DIALOG_TAG);
+            if (fd instanceof DialogFragment) {
+                Dialog d = ((DialogFragment) fd).getDialog();
+                if (d != null && d.isShowing()) {
+                    d.dismiss();
+                }
+            }
+
+        } else {
+            // TODO - show fail
+            Log_OC.d(TAG, "SSO failed");
+        }
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType()).
+                equals(mAuthTokenType) &&
+                mHostUrlInput.hasFocus() && event.getAction() == MotionEvent.ACTION_DOWN) {
+            checkOcServer();
+        }
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * Show untrusted cert dialog
+     */
+    public void showUntrustedCertDialog(
+            X509Certificate x509Certificate, SslError error, SslErrorHandler handler
+    ) {
+        // Show a dialog with the certificate info
+        SslUntrustedCertDialog dialog;
+        if (x509Certificate == null) {
+            dialog = SslUntrustedCertDialog.newInstanceForEmptySslError(error, handler);
+        } else {
+            dialog = SslUntrustedCertDialog.
+                    newInstanceForFullSslError(x509Certificate, error, handler);
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.addToBackStack(null);
+        dialog.show(ft, UNTRUSTED_CERT_DIALOG_TAG);
+    }
+
+    /**
+     * Show untrusted cert dialog
+     */
+    private void showUntrustedCertDialog(RemoteOperationResult result) {
+        // Show a dialog with the certificate info
+        SslUntrustedCertDialog dialog = SslUntrustedCertDialog.
+                newInstanceForFullSslError((CertificateCombinedException) result.getException());
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.addToBackStack(null);
+        dialog.show(ft, UNTRUSTED_CERT_DIALOG_TAG);
+
+    }
+
+    /**
+     * Called from SslValidatorDialog when a new server certificate was correctly saved.
+     */
+    public void onSavedCertificate() {
+        Fragment fd = getSupportFragmentManager().findFragmentByTag(SAML_DIALOG_TAG);
+        if (fd == null) {
+            // if SAML dialog is not shown,
+            // the SslDialog was shown due to an SSL error in the server check
+            checkOcServer();
+        }
+    }
+
+    /**
+     * Called from SslValidatorDialog when a new server certificate could not be saved
+     * when the user requested it.
+     */
+    @Override
+    public void onFailedSavingCertificate() {
+        dismissDialog(SAML_DIALOG_TAG);
+        Toast.makeText(this, R.string.ssl_validator_not_saved, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onCancelCertificate() {
+        dismissDialog(SAML_DIALOG_TAG);
+    }
+
+    private void doOnResumeAndBound() {
+        //Log_OC.e(TAG, "registering to listen for operation callbacks" );
+        mOperationsServiceBinder.addOperationListener(AuthenticatorActivity.this, mHandler);
+        if (mWaitingForOpId <= Integer.MAX_VALUE) {
+            mOperationsServiceBinder.dispatchResultIfFinished((int) mWaitingForOpId, this);
+        }
+
+        if (!webViewLoginMethod && mHostUrlInput.getText() != null && mHostUrlInput.getText().length() > 0
+                && !mServerIsChecked) {
+            checkOcServer();
+        }
+    }
+
+    private void dismissDialog(String dialogTag) {
+        Fragment frag = getSupportFragmentManager().findFragmentByTag(dialogTag);
+        if (frag instanceof DialogFragment) {
+            DialogFragment dialog = (DialogFragment) frag;
+            dialog.dismiss();
+        }
+    }
+
+    /**
+     * Create and show dialog for request authentication to the user
+     *
+     * @param webView Web view to emebd into the authentication dialog.
+     * @param handler Object responsible for catching and recovering HTTP authentication fails.
+     */
+    public void createAuthenticationDialog(WebView webView, HttpAuthHandler handler) {
+
+        // Show a dialog with the certificate info
+        CredentialsDialogFragment dialog = CredentialsDialogFragment.newInstanceForCredentials(webView, handler);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.addToBackStack(null);
+        dialog.setCancelable(false);
+        dialog.show(ft, CREDENTIALS_DIALOG_TAG);
+
+        if (!mIsFirstAuthAttempt) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    getText(R.string.saml_authentication_wrong_pass),
+                    Toast.LENGTH_LONG
+            ).show();
+        } else {
+            mIsFirstAuthAttempt = false;
+        }
+    }
+
+    /**
+     * For retrieving the clicking on authentication cancel button
+     */
+    public void doNegativeAuthenticatioDialogClick() {
+        mIsFirstAuthAttempt = true;
+    }
 
     private abstract static class RightDrawableOnTouchListener implements OnTouchListener {
 
@@ -2157,138 +2126,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         public abstract boolean onDrawableTouch(final MotionEvent event);
     }
 
-
-    private void getRemoteUserNameOperation(String sessionCookie) {
-
-        Intent getUserNameIntent = new Intent();
-        getUserNameIntent.setAction(OperationsService.ACTION_GET_USER_NAME);
-        getUserNameIntent.putExtra(OperationsService.EXTRA_SERVER_URL, mServerInfo.mBaseUrl);
-        getUserNameIntent.putExtra(OperationsService.EXTRA_COOKIE, sessionCookie);
-
-        if (mOperationsServiceBinder != null) {
-            mWaitingForOpId = mOperationsServiceBinder.queueNewOperation(getUserNameIntent);
-        }
-    }
-
-
-    @Override
-    public void onSsoFinished(String sessionCookie) {
-        if (sessionCookie != null && sessionCookie.length() > 0) {
-            Log_OC.d(TAG, "Successful SSO - time to save the account");
-            mAuthToken = sessionCookie;
-            getRemoteUserNameOperation(sessionCookie);
-            Fragment fd = getSupportFragmentManager().findFragmentByTag(SAML_DIALOG_TAG);
-            if (fd instanceof DialogFragment) {
-                Dialog d = ((DialogFragment) fd).getDialog();
-                if (d != null && d.isShowing()) {
-                    d.dismiss();
-                }
-            }
-
-        } else {
-            // TODO - show fail
-            Log_OC.d(TAG, "SSO failed");
-        }
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (AccountTypeUtils.getAuthTokenTypeSamlSessionCookie(MainApp.getAccountType()).
-                equals(mAuthTokenType) &&
-                mHostUrlInput.hasFocus() && event.getAction() == MotionEvent.ACTION_DOWN) {
-            checkOcServer();
-        }
-        return super.onTouchEvent(event);
-    }
-
-
-    /**
-     * Show untrusted cert dialog
-     */
-    public void showUntrustedCertDialog(
-            X509Certificate x509Certificate, SslError error, SslErrorHandler handler
-    ) {
-        // Show a dialog with the certificate info
-        SslUntrustedCertDialog dialog;
-        if (x509Certificate == null) {
-            dialog = SslUntrustedCertDialog.newInstanceForEmptySslError(error, handler);
-        } else {
-            dialog = SslUntrustedCertDialog.
-                    newInstanceForFullSslError(x509Certificate, error, handler);
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.addToBackStack(null);
-        dialog.show(ft, UNTRUSTED_CERT_DIALOG_TAG);
-    }
-
-
-    /**
-     * Show untrusted cert dialog
-     */
-    private void showUntrustedCertDialog(RemoteOperationResult result) {
-        // Show a dialog with the certificate info
-        SslUntrustedCertDialog dialog = SslUntrustedCertDialog.
-                newInstanceForFullSslError((CertificateCombinedException) result.getException());
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.addToBackStack(null);
-        dialog.show(ft, UNTRUSTED_CERT_DIALOG_TAG);
-
-    }
-
-    /**
-     * Called from SslValidatorDialog when a new server certificate was correctly saved.
-     */
-    public void onSavedCertificate() {
-        Fragment fd = getSupportFragmentManager().findFragmentByTag(SAML_DIALOG_TAG);
-        if (fd == null) {
-            // if SAML dialog is not shown, 
-            // the SslDialog was shown due to an SSL error in the server check
-            checkOcServer();
-        }
-    }
-
-    /**
-     * Called from SslValidatorDialog when a new server certificate could not be saved
-     * when the user requested it.
-     */
-    @Override
-    public void onFailedSavingCertificate() {
-        dismissDialog(SAML_DIALOG_TAG);
-        Toast.makeText(this, R.string.ssl_validator_not_saved, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onCancelCertificate() {
-        dismissDialog(SAML_DIALOG_TAG);
-    }
-
-
-    private void doOnResumeAndBound() {
-        //Log_OC.e(TAG, "registering to listen for operation callbacks" );
-        mOperationsServiceBinder.addOperationListener(AuthenticatorActivity.this, mHandler);
-        if (mWaitingForOpId <= Integer.MAX_VALUE) {
-            mOperationsServiceBinder.dispatchResultIfFinished((int) mWaitingForOpId, this);
-        }
-
-        if (!webViewLoginMethod && mHostUrlInput.getText() != null && mHostUrlInput.getText().length() > 0
-                && !mServerIsChecked) {
-            checkOcServer();
-        }
-    }
-
-
-    private void dismissDialog(String dialogTag) {
-        Fragment frag = getSupportFragmentManager().findFragmentByTag(dialogTag);
-        if (frag instanceof DialogFragment) {
-            DialogFragment dialog = (DialogFragment) frag;
-            dialog.dismiss();
-        }
-    }
-
-
     /**
      * Implements callback methods for service binding.
      */
@@ -2316,39 +2153,5 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mOperationsServiceBinder = null;
             }
         }
-    }
-
-    /**
-     * Create and show dialog for request authentication to the user
-     *
-     * @param webView Web view to embed into the authentication dialog.
-     * @param handler Object responsible for catching and recovering HTTP authentication fails.
-     */
-    public void createAuthenticationDialog(WebView webView, HttpAuthHandler handler) {
-
-        // Show a dialog with the certificate info
-        CredentialsDialogFragment dialog = CredentialsDialogFragment.newInstanceForCredentials(webView, handler);
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.addToBackStack(null);
-        dialog.setCancelable(false);
-        dialog.show(ft, CREDENTIALS_DIALOG_TAG);
-
-        if (!mIsFirstAuthAttempt) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    getText(R.string.saml_authentication_wrong_pass),
-                    Toast.LENGTH_LONG
-            ).show();
-        } else {
-            mIsFirstAuthAttempt = false;
-        }
-    }
-
-    /**
-     * For retrieving the clicking on authentication cancel button
-     */
-    public void doNegativeAuthenticatioDialogClick() {
-        mIsFirstAuthAttempt = true;
     }
 }

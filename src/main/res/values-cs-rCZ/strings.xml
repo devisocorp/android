@@ -79,7 +79,7 @@
     <string name="uploader_error_message_source_file_not_found">Soubor k nahrání nebyl v tomto umístění nalezen. Zkontrolujte prosím zda soubor existuje.</string>
     <string name="uploader_error_message_source_file_not_copied">Došlo k chybě při kopírování souboru do dočasného adresáře. Zkuste prosím zopakovat odeslání.</string>
     <string name="uploader_upload_files_behaviour">Nahrát možnost:</string>
-    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Přesunout soubor do Nextcloud adresáře</string>
+    <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Přesunout soubor do Cloudira adresáře</string>
     <string name="uploader_upload_files_behaviour_only_upload">Jen uploadovat</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Uploadovat a vymazat ze zdroje</string>
     <string name="file_list_seconds_ago">před pár sekundami</string>
@@ -331,9 +331,10 @@
     <string name="conflict_use_local_version">místní verze</string>
     <string name="conflict_use_server_version">serverová verze</string>
 
-    <string name="preview_sorry">Omlouváme se za to</string>
+    <string name="preview_sorry">Omlouváme se za to.</string>
     <string name="preview_image_description">Náhled obrázku</string>
     <string name="preview_image_error_unknown_format">Nelze zobrazit obrázek</string>
+
     <string name="error__upload__local_file_not_copied">%1$s nelze zkopírovat do místního adresáře %2$s</string>
     <string name="prefs_instant_upload_path_title">Adresář pro okamžité nahrání</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">Používat podadresáře</string>
@@ -388,7 +389,7 @@
     <string name="file_migration_failed_not_enough_space">Chyba: Nedostatek volného místa</string>
     <string name="file_migration_failed_not_writable">Chyba: Do cíle nelze zapisovat</string>
     <string name="file_migration_failed_not_readable">Chyba: Soubor nelze číst</string>
-    <string name="file_migration_failed_dir_already_exists">Chyba: Nextcloud adresář již existuje</string>
+    <string name="file_migration_failed_dir_already_exists">Chyba: Cloudira adresář již existuje</string>
     <string name="file_migration_failed_while_coping">Chyba: V průběhu migrace</string>
     <string name="file_migration_failed_while_updating_index">Chyba: Nepodařilo se aktualizovat index</string>
 
@@ -522,7 +523,7 @@
     <string name="maintenance_mode">Server je v režimu údržby</string>
     <string name="uploads_view_upload_status_waiting_for_charging">Čekání na nabití</string>
     <string name="actionbar_search">Hledat</string>
-    <string name="files_drop_not_supported">Toto je Nextcloud funkce, prosím nahrát</string>
+    <string name="files_drop_not_supported">Toto je Cloudira funkce, prosím nahrát</string>
     <string name="learn_more">Více</string>
     <string name="drawer_participate">Zúčastnit se</string>
     <string name="participate_testing_headline">Pomoz nám testovat</string>
