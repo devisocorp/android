@@ -34,11 +34,12 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_marginBottom="@dimen/standard_padding"
+            android:background="@drawable/image_border"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/isocorp_logo" />
+            android:src="@drawable/cloudira_circle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,18 +101,18 @@
                 </android.support.design.widget.TextInputLayout>
                 <!--TODO CLOUDIRA 1.4.2 TIDAK ADA TOMBOL INI-->
                 <!--<ImageButton-->
-                    <!--android:id="@+id/testServerButton"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_vertical|right"-->
-                    <!--android:layout_marginRight="@dimen/alternate_half_padding"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:contentDescription="@string/test_server_button"-->
-                    <!--android:onClick="onTestServerConnectionClick"-->
-                    <!--android:padding="@dimen/zero"-->
-                    <!--android:scaleType="fitCenter"-->
-                    <!--android:src="@drawable/arrow_right"-->
-                    <!--android:tint="@color/white" />-->
+                <!--android:id="@+id/testServerButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical|right"-->
+                <!--android:layout_marginRight="@dimen/alternate_half_padding"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:contentDescription="@string/test_server_button"-->
+                <!--android:onClick="onTestServerConnectionClick"-->
+                <!--android:padding="@dimen/zero"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/arrow_right"-->
+                <!--android:tint="@color/white" />-->
 
                 <ImageButton
                     android:id="@+id/embeddedRefreshButton"
