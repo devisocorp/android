@@ -749,7 +749,7 @@ public class ExtendedListFragment extends Fragment
      */
     public void setMessageForEmptyList(@StringRes final int headline, @StringRes final int message,
                                        @DrawableRes final int icon) {
-        setMessageForEmptyList(headline, message, icon, false);
+        setMessageForEmptyList(headline, message, icon, true);
     }
 
     /**
