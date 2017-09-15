@@ -22,8 +22,7 @@
     android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context=".ui.fragment.FilePreviewFragment">
+    android:gravity="center">
 
     <RelativeLayout
         android:id="@+id/file_preview_container"
